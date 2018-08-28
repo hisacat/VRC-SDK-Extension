@@ -144,6 +144,12 @@ namespace VRCSDKHelper
                             ResetToBasePose.DoResetToBasePose(avatarAnimator, avatarModel);
 
                         }
+
+                        GUILayout.Label("Testing", EditorStyles.boldLabel);
+                        if (GUILayout.Button("Test EyeTracking"))
+                        {
+                            EyeTrackingTestWindow.Init(avatarAnimator);
+                        }
                     }
                     GUI.enabled = true;
                 }
