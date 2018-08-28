@@ -88,6 +88,12 @@ namespace VRCSDKHelper
             //GUILayout.Label("VRC SDK Helper", EditorStyles.boldLabel);
             GUILayout.Label("VRC SDK Helper. Version " + VRCSDKHelper.versionStr, EditorStyles.boldLabel);
 
+            if (Application.isPlaying)
+            {
+                EditorGUILayout.HelpBox("Editor is Playing", MessageType.Warning);
+                return;
+            }
+
             var sceneType = VRCSDKHelper.CheckSceneType();
 
             #region Avatar
@@ -128,6 +134,7 @@ namespace VRCSDKHelper
                     GUI.enabled = (avatarObject != null && avatarAnimator != null &&
                                         avatarAnimatorAvatar != null && avatarModel != null);
                     {
+                        GUILayout.Label("Helper", EditorStyles.boldLabel);
                         if (GUILayout.Button("Detect Viseme Blend Shape"))
                         {
                             AutoDetectVisemeBlendShape.DoAutoDetectVisemeBlendShape(avatarObject);
