@@ -187,7 +187,10 @@ namespace VRCSDKHelper
             }
             if (GUILayout.Button("Check for Updates"))
             {
-
+                if(EditorUtility.DisplayDialog("VRC SDK Helper", "Update check function is preparing\r\nOpen Github?", "Yes", "No"))
+                {
+                    Application.OpenURL("https://github.com/hisacat/VRC-SDK-Helper/");
+                }
             }
             changeLogScroll = GUILayout.BeginScrollView(changeLogScroll);
             GUILayout.Label(
