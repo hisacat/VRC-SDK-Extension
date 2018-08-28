@@ -40,7 +40,7 @@ namespace VRCSDKHelper
                 EditorUtility.DisplayDialog("Auto Detect Viseme Blend Shape", "Please set Face Mesh,", "Ok");
                 return;
             }
-            
+
             var blendShapeCount = avatar.VisemeSkinnedMesh.sharedMesh.blendShapeCount;
             string[] blendShapeNames = new string[blendShapeCount];
             for (int i = 0; i < blendShapeCount; i++)
@@ -62,6 +62,23 @@ namespace VRCSDKHelper
                     }
                 }
             }
+
+            //vrc.v_e & vrc.v_ee (is lagacy?)
+            var visume_E_index = (int)VRC_AvatarDescriptor.Viseme.E;
+            var visume_E_lagacy = "vrc.v_ee";
+            if (string.IsNullOrEmpty(avatar.VisemeBlendShapes[visume_E_index]))
+            {
+                for (int j = 0; j < blendShapeCount; j++)
+                {
+                    if (blendShapeNames[j].ToLower() == visume_E_lagacy)
+                    {
+                        avatar.VisemeBlendShapes[visume_E_index] = blendShapeNames[j];
+                        findCount++;
+                        break;
+                    }
+                }
+            }
+
             EditorUtility.DisplayDialog("Auto Detect Viseme Blend Shape", "Done.\r\nFind " + findCount + " of " + visemeCount + ".", "Ok");
         }
     }
