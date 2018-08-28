@@ -21,6 +21,9 @@ namespace VRCSDKHelper
 
     public static class VRCSDKHelper
     {
+        public const string versionStr = "0.1b";
+        public const int version = 0;
+
         public static Language language;
 
         [MenuItem("VRChat SDK Helper/Open Helper Window")]

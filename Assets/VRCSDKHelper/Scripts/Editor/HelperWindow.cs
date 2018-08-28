@@ -31,9 +31,9 @@ namespace VRCSDKHelper
                 avatarObject = FindObjectOfType<VRC_AvatarDescriptor>();
 
             avatarAnimator = null;
-            if(avatarObject != null)
+            if (avatarObject != null)
                 avatarAnimator = avatarObject.GetComponent<Animator>();
-            
+
             avatarAnimatorAvatar = null;
             if (avatarAnimator != null)
                 avatarAnimatorAvatar = avatarAnimator.avatar;
@@ -86,6 +86,7 @@ namespace VRCSDKHelper
             GUILayout.Space(4);
 
             //GUILayout.Label("VRC SDK Helper", EditorStyles.boldLabel);
+            GUILayout.Label("VRC SDK Helper. Version " + VRCSDKHelper.versionStr, EditorStyles.boldLabel);
 
             var sceneType = VRCSDKHelper.CheckSceneType();
 
@@ -123,7 +124,7 @@ namespace VRCSDKHelper
                         EditorGUILayout.HelpBox("Avatar's Animator Avatar Missing!", MessageType.Warning);
                     if (avatarObject != null && avatarModel == null)
                         EditorGUILayout.HelpBox("Avatar's Model is Missing!", MessageType.Warning);
-                    
+
                     GUI.enabled = (avatarObject != null && avatarAnimator != null &&
                                         avatarAnimatorAvatar != null && avatarModel != null);
                     {
