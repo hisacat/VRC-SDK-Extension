@@ -24,13 +24,19 @@ namespace VRCSDKHelper
             if (local == null)
                 return id;
             var str = local.ToString();
-            if(string.IsNullOrEmpty(str))
+            if (string.IsNullOrEmpty(str))
             {
                 var localen = table[Language.En.ToString()];
                 if (localen == null)
                     return id;
-                return localen.ToString();
+                return Formatting(localen.ToString());
             }
+            return Formatting(str);
+        }
+
+        private static string Formatting(string str)
+        {
+            str = str.Replace("<br>", "\r\n");
             return str;
         }
     }
