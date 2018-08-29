@@ -28,8 +28,13 @@ namespace VRCSDKHelper
 
         [MenuItem("VRChat SDK Helper/Open Helper Window")]
         public static void OpenHelperWindow()
-        {
+        { 
             HelperWindow.Init();
+        }
+
+        public static void SetLanguage(Language language)
+        {
+            VRCSDKHelper.language = language;
         }
 
         public static SceneType CheckSceneType()

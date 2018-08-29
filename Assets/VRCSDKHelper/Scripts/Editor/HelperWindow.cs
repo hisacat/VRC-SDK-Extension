@@ -85,8 +85,29 @@ namespace VRCSDKHelper
             GUILayout.Box("", vrcSdkHelperHeader);
             GUILayout.Space(4);
 
-            //GUILayout.Label("VRC SDK Helper", EditorStyles.boldLabel);
-            GUILayout.Label("VRC SDK Helper. Version " + VRCSDKHelper.versionStr, EditorStyles.boldLabel);
+            Localization.Init();
+
+            #region Set Language
+            GUILayout.BeginHorizontal();
+            GUI.backgroundColor = Color.gray;
+            if (GUILayout.Button("English"))
+            {
+                VRCSDKHelper.SetLanguage(Language.En);
+            }
+            if (GUILayout.Button("한국어"))
+            {
+                VRCSDKHelper.SetLanguage(Language.Ko);
+            }
+            if (GUILayout.Button("日本語"))
+            {
+                VRCSDKHelper.SetLanguage(Language.Jp);
+            }
+            GUI.backgroundColor = Color.white;
+            GUILayout.EndHorizontal();
+            GUILayout.Space(4);
+            #endregion
+
+            GUILayout.Label("VRC SDK Helper. " + Localization.GetLocalizedString("global_version") + " " + VRCSDKHelper.versionStr, EditorStyles.boldLabel);
 
             if (Application.isPlaying)
             {
@@ -99,13 +120,13 @@ namespace VRCSDKHelper
             #region Avatar
             GUILayout.BeginVertical(GUI.skin.box);
             {
-                foldout_Avatar = EditorGUILayout.Foldout(foldout_Avatar, "Avatar", true);
+                foldout_Avatar = EditorGUILayout.Foldout(foldout_Avatar, Localization.GetLocalizedString("mainmenu_avatar"), true);
                 if (foldout_Avatar)
                 {
                     FindAvatar();
                     #region Avatar Object Field
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label("Avatar");
+                    GUILayout.Label(Localization.GetLocalizedString("global_avatar"));
                     GUI.enabled = false;
                     GUILayout.FlexibleSpace();
                     EditorGUILayout.ObjectField(avatarObject, typeof(VRC_AvatarDescriptor), true);
@@ -114,7 +135,7 @@ namespace VRCSDKHelper
                     #endregion
                     #region Avatar Model Field
                     GUILayout.BeginHorizontal();
-                    GUILayout.Label("Model");
+                    GUILayout.Label(Localization.GetLocalizedString("global_model"));
                     GUILayout.FlexibleSpace();
                     GUI.enabled = false;
                     EditorGUILayout.ObjectField(avatarModel, typeof(GameObject), true);
@@ -123,33 +144,40 @@ namespace VRCSDKHelper
                     #endregion
 
                     if (avatarObject == null)
-                        EditorGUILayout.HelpBox("VRC_AvatarDescriptor is Missing!", MessageType.Warning);
-                    if (avatarAnimator == null)
-                        EditorGUILayout.HelpBox("Avatar's Animator is Missing!", MessageType.Warning);
+                        EditorGUILayout.HelpBox(Localization.GetLocalizedString("warnning_vrc_avatardescriptor_missing"), MessageType.Warning);
+                    if (avatarObject != null && avatarAnimator == null)
+                        EditorGUILayout.HelpBox(Localization.GetLocalizedString("warnning_avatar_animator_missing"), MessageType.Warning);
                     if (avatarAnimator != null && avatarAnimatorAvatar == null)
-                        EditorGUILayout.HelpBox("Avatar's Animator Avatar Missing!", MessageType.Warning);
+                        EditorGUILayout.HelpBox(Localization.GetLocalizedString("warnning_avatar_animator_avatar_missing"), MessageType.Warning);
                     if (avatarObject != null && avatarModel == null)
-                        EditorGUILayout.HelpBox("Avatar's Model is Missing!", MessageType.Warning);
+                        EditorGUILayout.HelpBox(Localization.GetLocalizedString("warnning_avatar_model_missing"), MessageType.Warning);
 
                     GUI.enabled = (avatarObject != null && avatarAnimator != null &&
                                         avatarAnimatorAvatar != null && avatarModel != null);
                     {
-                        GUILayout.Label("Helper", EditorStyles.boldLabel);
-                        if (GUILayout.Button("Detect Viseme Blend Shape"))
+                        #region Help Functions
+                        GUILayout.Label(Localization.GetLocalizedString("global_helper_function"), EditorStyles.boldLabel);
+                        //Detect viseme blend shape
+                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape")))
                         {
                             AutoDetectVisemeBlendShape.DoAutoDetectVisemeBlendShape(avatarObject);
                         }
-                        if (GUILayout.Button("Reset to Base Pose(T-Pose)"))
+                        //Reset to base pose
+                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_reset_to_base_pose")))
                         {
                             ResetToBasePose.DoResetToBasePose(avatarAnimator, avatarModel);
 
                         }
+                        #endregion
 
-                        GUILayout.Label("Testing", EditorStyles.boldLabel);
-                        if (GUILayout.Button("Test EyeTracking"))
+                        #region Testing Functions
+                        GUILayout.Label(Localization.GetLocalizedString("global_testing_function"), EditorStyles.boldLabel);
+                        //Test EyeTracking
+                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_testing_test_eyetracking")))
                         {
                             EyeTrackingTestWindow.Init(avatarAnimator);
                         }
+                        #endregion
                     }
                     GUI.enabled = true;
                 }
@@ -160,10 +188,10 @@ namespace VRCSDKHelper
             #region World
             GUILayout.BeginVertical(GUI.skin.box);
             {
-                foldout_World = EditorGUILayout.Foldout(foldout_World, "World", true);
+                foldout_World = EditorGUILayout.Foldout(foldout_World, Localization.GetLocalizedString("mainmenu_world"), true);
                 if (foldout_World)
                 {
-                    GUILayout.Label("Notting yet...");
+                    GUILayout.Label(Localization.GetLocalizedString("global_nottingyet"));
                 }
             }
             GUILayout.EndVertical();
@@ -172,22 +200,22 @@ namespace VRCSDKHelper
             #region Util
             GUILayout.BeginVertical(GUI.skin.box);
             {
-                foldout_Util = EditorGUILayout.Foldout(foldout_Util, "Util", true);
+                foldout_Util = EditorGUILayout.Foldout(foldout_Util, Localization.GetLocalizedString("mainmenu_util"), true);
                 if (foldout_Util)
                 {
-
+                    GUILayout.Label(Localization.GetLocalizedString("global_nottingyet"));
                 }
             }
             GUILayout.EndVertical();
             #endregion
 
-            if (GUILayout.Button("Open GitHub"))
+            if (GUILayout.Button(Localization.GetLocalizedString("mainmenu_opengithub")))
             {
                 Application.OpenURL("https://github.com/hisacat/VRC-SDK-Helper/");
             }
-            if (GUILayout.Button("Check for Updates"))
+            if (GUILayout.Button(Localization.GetLocalizedString("mainmenu_checkforupdates")))
             {
-                if(EditorUtility.DisplayDialog("VRC SDK Helper", "Update check function is preparing\r\nOpen Github?", "Yes", "No"))
+                if (EditorUtility.DisplayDialog("VRC SDK Helper", "Update check function is preparing\r\nOpen Github?", "Yes", "No"))
                 {
                     Application.OpenURL("https://github.com/hisacat/VRC-SDK-Helper/");
                 }
@@ -199,7 +227,9 @@ namespace VRCSDKHelper
 First Release.
     -Make Helper Window
     -Added 'Detect Viseme Blend Shape' function
-    -Added 'Reset to Base Pose(T-Pose)' function"
+    -Added 'Reset to Base Pose(T-Pose)' function
+    -Added 'Test EyeTracking' function
+    -Added Localization"
             );
             GUILayout.EndScrollView();
         }
