@@ -13,7 +13,9 @@ namespace VRCSDKHelper
             Undo.RecordObject(avatar, "Auto Detect Viseme Blend Shape");
             if (avatar.VisemeSkinnedMesh == null)
             {
-                if (EditorUtility.DisplayDialog("Auto Detect Viseme Blend Shape", "Face Mesh is not exist, Use Mesh named by \"Body\"?", "Ok", "Cancel"))
+                if (EditorUtility.DisplayDialog(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape"),
+                    Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_face_mesh_not_exits"),
+                    "Ok", "Cancel"))
                 {
                     var body = avatar.transform.Find("Body");
                     if (body != null)
@@ -21,7 +23,9 @@ namespace VRCSDKHelper
                         var sm = body.GetComponent<SkinnedMeshRenderer>();
                         if (sm == null)
                         {
-                            EditorUtility.DisplayDialog("Auto Detect Viseme Blend Shape", "Body GameObject is not exist", "Ok");
+                            EditorUtility.DisplayDialog(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape"),
+                                Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_body_object_not_exits"),
+                                "Ok");
                             return;
                         }
 
@@ -29,7 +33,9 @@ namespace VRCSDKHelper
                     }
                     else
                     {
-                        EditorUtility.DisplayDialog("Auto Detect Viseme Blend Shape", "There are No Skinned Mesh Renderer in Body GameObject", "Ok");
+                        EditorUtility.DisplayDialog(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape"),
+                            Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_skinned_mesh_renderer_not_exits"),
+                            "Ok");
                         return;
                     }
                 }
@@ -37,7 +43,9 @@ namespace VRCSDKHelper
 
             if (avatar.VisemeSkinnedMesh == null)
             {
-                EditorUtility.DisplayDialog("Auto Detect Viseme Blend Shape", "Please set Face Mesh,", "Ok");
+                EditorUtility.DisplayDialog(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape"),
+                    Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_please_set_face_mesh"),
+                    "Ok");
                 return;
             }
 
@@ -79,7 +87,9 @@ namespace VRCSDKHelper
                 }
             }
 
-            EditorUtility.DisplayDialog("Auto Detect Viseme Blend Shape", "Done.\r\nFind " + findCount + " of " + visemeCount + ".", "Ok");
+            EditorUtility.DisplayDialog(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape")
+                , Localization.GetLocalizedString("global_done") +
+                "\r\nFind " + findCount + " of " + visemeCount + ".", "Ok");
         }
     }
 }

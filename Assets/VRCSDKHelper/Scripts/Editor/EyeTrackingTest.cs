@@ -64,19 +64,19 @@ namespace VRCSDKHelper
                     rightEyeTrf = avatarAnimator.GetBoneTransform(HumanBodyBones.RightEye);
                 }
 
-                GUILayout.Label("Up - Down : " + (int)updownSliderValue);
+                GUILayout.Label(Localization.GetLocalizedString("avatar_testing_test_eyetracking_up_down") + " : " + (int)updownSliderValue);
                 updownSliderValue = GUILayout.HorizontalSlider(updownSliderValue, -19, 25);
-                GUILayout.Label("Left - Right : " + (int)leftRightSliderValue);
+                GUILayout.Label(Localization.GetLocalizedString("avatar_testing_test_eyetracking_left_right") + " : " + (int)leftRightSliderValue);
                 leftRightSliderValue = GUILayout.HorizontalSlider(leftRightSliderValue, -19, 19);
 
                 rightEyeTrf.localEulerAngles = leftEyeTrf.localEulerAngles = new Vector3(updownSliderValue, -leftRightSliderValue, 0);
 
-                if (GUILayout.Button("Reset to Default"))
+                if (GUILayout.Button(Localization.GetLocalizedString("global_reset_to_default")))
                 {
                     updownSliderValue = 0;
                     leftRightSliderValue = 0;
                 }
-                if (GUILayout.Button("Stop"))
+                if (GUILayout.Button(Localization.GetLocalizedString("global_stop")))
                 {
                     this.Close();
                 }
