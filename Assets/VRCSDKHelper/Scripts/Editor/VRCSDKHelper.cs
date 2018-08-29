@@ -16,7 +16,7 @@ namespace VRCSDKHelper
     {
         En = 0,
         Ko = 1,
-        Jp = 2,
+        Ja = 2,
     }
     
     public static class VRCSDKHelper

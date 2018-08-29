@@ -103,7 +103,7 @@ namespace VRCSDKHelper
             }
             if (GUILayout.Button("日本語"))
             {
-                VRCSDKHelper.SetLanguage(Language.Jp);
+                VRCSDKHelper.SetLanguage(Language.Ja);
             }
             GUI.backgroundColor = Color.white;
             GUILayout.EndHorizontal();

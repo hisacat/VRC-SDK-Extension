@@ -1,30 +1,30 @@
-id,En,Ko,Jp
-language,english,한글,日本語
-global_version,version,버전,バージョン
-mainmenu_avatar,Avatar,아바타 관련,アバター関連
-mainmenu_world,World,월드 관련,ワールド関連
-mainmenu_util,Util,부가기능,アドオン
-global_nottingyet,Notting yet…,준비중입니다,準備中です
-global_avatar,avatar,아바타,アバター
-global_model,model,모델,モデル
-warnning_vrc_avatardescriptor_missing,VRC_AvatarDescriptor is Missing!,VRC_AvatarDescriptor를 찾을 수 없습니다.,VRC_AvatarDescriptorが存在しません
-warnning_avatar_animator_missing,Avatar's Animator is Missing!,아바타에 Animator가 존재하지 않습니다.,アバターにAnimatorが存在しません
-warnning_avatar_animator_avatar_missing,Avatar's Animator Avatar Missing!,아바타 Animator의 Avatar가 존재하지 않습니다.,アバターのAnimatorのAvatarが存在しません
-warnning_avatar_model_missing,Avatar's Model is Missing!,아바타의 모델 파일을 찾을 수 없습니다.,アバターのモデルファイルが存在しません
-global_helper_function,Helper Func,도우미 기능,ヘルパー機能
-global_testing_function,For Testing Func,테스트 기능,テスト機能
+id,En,Ko,Ja
 avatar_helper_detect_viseme_blend_shape,Lipsync - Detect Viseme (Viseme Blend Shape),립싱크 - Viseme 자동 할당 (Viseme Blend Shape),リップシンク - Viseme自動代入（Viseme Blend Shape）
+avatar_helper_detect_viseme_blend_shape_dialog_body_object_not_exits,Body GameObject is not exist,Body 게임오브젝트를 찾을 수 없습니다.,Bodyゲームオブジェクトを見つけることができません
+avatar_helper_detect_viseme_blend_shape_dialog_face_mesh_not_exits,Face Mesh is not exist<br>Use Mesh named by 'Body'?,Face Mesh를 찾을 수 없습니다.<br>Body라는 이름을 가진 Mesh를 사용할까요?,Face Meshがありません<br> Bodyという名前を持つMeshを使用しましょうか？
+avatar_helper_detect_viseme_blend_shape_dialog_please_set_face_mesh,Please set Face Mesh,Face Mesh를 할당해 주세요.,Face Meshを代入してください
+avatar_helper_detect_viseme_blend_shape_dialog_skinned_mesh_renderer_not_exits,There are No Skinned Mesh Renderer in Body GameObject,Body Mesh에 Skinned Mesh Renderer가 없습니다.,Body MeshにSkinned Mesh Rendererがありません
 avatar_helper_reset_to_base_pose,Reset to Base Pose(T-Pose),기본 포즈로 초기화 (T-Pose),基本ポーズにリセット（T-Pose）
 avatar_testing_test_eyetracking,Test EyeTracking,아이트래킹 테스트,アイトラッキングテスト
-mainmenu_opengithub,Open GitHub,GitHub 열기,GitHubオープン
-mainmenu_checkforupdates,Check for Updates,업데이트 확인,更新の確認
-global_loading,loading…,로딩중…,ロード中
-avatar_testing_test_eyetracking_up_down,Up - Down,상 - 하,上 - 下
 avatar_testing_test_eyetracking_left_right,Left - Right,좌 - 우,左 - 右
+avatar_testing_test_eyetracking_up_down,Up - Down,상 - 하,上 - 下
+global_avatar,avatar,아바타,アバター
+global_done,Done,완료,完了
+global_helper_function,Helper Func,도우미 기능,ヘルパー機能
+global_loading,loading…,로딩중…,ロード中
+global_model,model,모델,モデル
+global_nottingyet,Notting yet…,준비중입니다,準備中です
 global_reset_to_default,Reset to Default,기본값으로 재설정,デフォルトにリセット
 global_stop,Stop,중지,やめる
-global_done,Done,완료,完了
-avatar_helper_detect_viseme_blend_shape_dialog_face_mesh_not_exits,Face Mesh is not exist<br>Use Mesh named by 'Body'?,Face Mesh를 찾을 수 없습니다.<br>Body라는 이름을 가진 Mesh를 사용할까요?,Face Meshがありません<br> Bodyという名前を持つMeshを使用しましょうか？
-avatar_helper_detect_viseme_blend_shape_dialog_body_object_not_exits,Body GameObject is not exist,Body 게임오브젝트를 찾을 수 없습니다.,Bodyゲームオブジェクトを見つけることができません
-avatar_helper_detect_viseme_blend_shape_dialog_skinned_mesh_renderer_not_exits,There are No Skinned Mesh Renderer in Body GameObject,Body Mesh에 Skinned Mesh Renderer가 없습니다.,Body MeshにSkinned Mesh Rendererがありません
-avatar_helper_detect_viseme_blend_shape_dialog_please_set_face_mesh,Please set Face Mesh,Face Mesh를 할당해 주세요.,Face Meshを代入してください
+global_testing_function,For Testing Func,테스트 기능,テスト機能
+global_version,version,버전,バージョン
+language,english,한글,日本語
+mainmenu_avatar,Avatar,아바타 관련,アバター関連
+mainmenu_checkforupdates,Check for Updates,업데이트 확인,更新の確認
+mainmenu_opengithub,Open GitHub,GitHub 열기,GitHubオープン
+mainmenu_util,Util,부가기능,アドオン
+mainmenu_world,World,월드 관련,ワールド関連
+warnning_avatar_animator_avatar_missing,Avatar's Animator Avatar Missing!,아바타 Animator의 Avatar가 존재하지 않습니다.,アバターのAnimatorのAvatarが存在しません
+warnning_avatar_animator_missing,Avatar's Animator is Missing!,아바타에 Animator가 존재하지 않습니다.,アバターにAnimatorが存在しません
+warnning_avatar_model_missing,Avatar's Model is Missing!,아바타의 모델 파일을 찾을 수 없습니다.,アバターのモデルファイルが存在しません
+warnning_vrc_avatardescriptor_missing,VRC_AvatarDescriptor is Missing!,VRC_AvatarDescriptor를 찾을 수 없습니다.,VRC_AvatarDescriptorが存在しません
