@@ -17,6 +17,12 @@ Just select "Open Helper Window"!<br>
 
 ## Notes
 
+## Todo
+* Write MD
+* First release
+* Check update func
+* Auto setup SnailMarker
+
 ## Donate
 I'm starving…<br>
 Thanks to read!<br>
