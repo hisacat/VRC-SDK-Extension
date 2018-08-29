@@ -1,5 +1,5 @@
-VRC-SDK-Helper
-============
+# VRC-SDK-Helper
+
 Unity에서 보다 편리하게 VRC SDK를 사용할 수 있는 기능들을 추가했습니다.<br>
 *Read this in other languages: [English](README.md), [한국어](README.ko.md), [日本語](README.ja.md).*
 
@@ -14,8 +14,12 @@ Unity에서 보다 편리하게 VRC SDK를 사용할 수 있는 기능들을 추
 ![](Media/MenuItem.png)
 
 ## 기능
-
-## 메모
+* 아바타 관련
+  * Viseme Blend Shape 자동 할당
+  * 기본 포즈로 초기화 (T-Pose)
+  * 아이트래킹 테스트
+* 월드 관련
+* 부가기능
 
 ## Todo
 * MD 작성

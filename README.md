@@ -14,8 +14,12 @@ Just select "Open Helper Window"!<br>
 ![](Media/MenuItem.png)
 
 ## Functions
-
-## Notes
+* Avatar
+  * Detect Viseme (Viseme Blend Shape)
+  * Reset to Base Pose (T-Pose)
+  * Test Eyetracking
+* World
+* Util
 
 ## Todo
 * Write MD

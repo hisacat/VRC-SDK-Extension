@@ -14,6 +14,12 @@ Unityよりも便利にVRC SDKを使うことができる機能を追加しま�
 ![](Media/MenuItem.png)
 
 ## 기능
+*アバター関連
+  * Viseme自動代入（Viseme Blend Shape）
+  *基本ポーズにリセット（T-Pose）
+  *アイトラッキングテスト
+*ワールド関連
+*アドオン
 
 ## Todo
 * MDを書く
