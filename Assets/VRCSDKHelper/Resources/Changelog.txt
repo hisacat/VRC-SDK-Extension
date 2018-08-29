@@ -1,7 +1,6 @@
 Changelog:
 
 0.1b - 2018.08.29
-First Release.
     -Make Helper Window
     -Added 'Detect Viseme Blend Shape' function
     -Added 'Reset to Base Pose(T-Pose)' function
