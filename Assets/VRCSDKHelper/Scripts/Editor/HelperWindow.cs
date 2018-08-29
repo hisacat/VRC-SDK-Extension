@@ -25,6 +25,9 @@ namespace VRCSDKHelper
 
         private static Vector2 changeLogScroll;
 
+        private static GUIStyle vrcSdkHelperHeader;
+        private static string changelog = null;
+
         private static void FindAvatar()
         {
             if (avatarObject == null)
@@ -60,8 +63,6 @@ namespace VRCSDKHelper
             }
         }
 
-        private static GUIStyle vrcSdkHelperHeader;
-
         private void OnEnable()
         {
             titleContent = new GUIContent("VRChat SDK Helper");
@@ -79,6 +80,8 @@ namespace VRCSDKHelper
                 fixedWidth = 400,
                 fixedHeight = 200
             };
+
+            changelog = (Resources.Load("changelog") as TextAsset).text;
         }
         void OnGUI()
         {
@@ -221,16 +224,7 @@ namespace VRCSDKHelper
                 }
             }
             changeLogScroll = GUILayout.BeginScrollView(changeLogScroll);
-            GUILayout.Label(
-    @"Changelog:
-2018.08.29
-First Release.
-    -Make Helper Window
-    -Added 'Detect Viseme Blend Shape' function
-    -Added 'Reset to Base Pose(T-Pose)' function
-    -Added 'Test EyeTracking' function
-    -Added Localization"
-            );
+            GUILayout.Label(changelog);
             GUILayout.EndScrollView();
         }
 
