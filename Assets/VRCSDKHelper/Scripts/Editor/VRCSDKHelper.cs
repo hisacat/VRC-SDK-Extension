@@ -18,7 +18,7 @@ namespace VRCSDKHelper
         Ko = 1,
         Jp = 2,
     }
-
+    
     public static class VRCSDKHelper
     {
         public const string versionStr = "0.1b";

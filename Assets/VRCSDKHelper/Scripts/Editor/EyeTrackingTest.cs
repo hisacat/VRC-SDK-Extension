@@ -12,6 +12,7 @@ namespace VRCSDKHelper
         {
             EyeTrackingTestWindow window = (EyeTrackingTestWindow)EditorWindow.GetWindow(typeof(EyeTrackingTestWindow), true);
             window.avatarAnimator = avatarAnimator;
+            window.curLanguage = VRCSDKHelper.language; ;
             window.Show();
         }
 
@@ -23,20 +24,29 @@ namespace VRCSDKHelper
         private Transform leftEyeTrf = null;
         private Transform rightEyeTrf = null;
 
+        private Language curLanguage;
+        private bool firstSetup = true;
+
         private void OnEnable()
         {
             EditorApplication.playmodeStateChanged += LogPlayModeState;
-            titleContent = new GUIContent("Test EyeTracking");
+            titleContent = new GUIContent("VRChat SDK Helper");
             minSize = maxSize = new Vector2(150, 160);
             testEyeTracking = null;
-
+            
             EditorApplication.isPlaying = true;
         }
 
         private void OnGUI()
         {
+            if (Application.isPlaying && firstSetup)
+            {
+                VRCSDKHelper.SetLanguage(curLanguage);
+                firstSetup = false;
+            }
+
             GUILayout.BeginVertical();
-            GUILayout.Label("VRChat SDK Helper\r\nTest EyeTracking");
+            GUILayout.Label("VRChat SDK Helper\r\n" + Localization.GetLocalizedString("avatar_testing_test_eyetracking"));
             GUILayout.Space(4);
 
             if (Application.isEditor && Application.isPlaying)
@@ -73,7 +83,7 @@ namespace VRCSDKHelper
             }
             else
             {
-                GUILayout.Label("Loading…");
+                GUILayout.Label(Localization.GetLocalizedString("global_loading"));
             }
             GUILayout.EndVertical();
         }
