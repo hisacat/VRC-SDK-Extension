@@ -29,8 +29,8 @@ namespace VRCSDKExtension
 
         private void OnEnable()
         {
-            EditorApplication.playmodeStateChanged += LogPlayModeState;
-            titleContent = new GUIContent("VRChat SDK Extension");
+            EditorApplication.playmodeStateChanged += PlaymodeStateChanged;
+            titleContent = new GUIContent(VRChatSDKExtension.ProjectName);
             minSize = maxSize = new Vector2(150, 160);
             testEyeTracking = null;
             
@@ -88,7 +88,7 @@ namespace VRCSDKExtension
             GUILayout.EndVertical();
         }
 
-        private void LogPlayModeState()
+        private void PlaymodeStateChanged()
         {
             if (!Application.isPlaying)
             {
