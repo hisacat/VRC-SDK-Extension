@@ -1,5 +1,5 @@
-VRC-SDK-Helper
-============
+# VRC-SDK-Extension
+
 Unityよりも便利にVRC SDKを使うことができる機能を追加しました。<br>
 *Read this in other languages: [English](README.md), [한국어](README.ko.md), [日本語](README.ja.md).*
 
