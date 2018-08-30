@@ -15,8 +15,11 @@ namespace VRCSDKExtension
             localization = CSVReader.Read("Localization");
         }
 
-        public static string GetLocalizedString(string id)
+        public static string GetLocalizedString(string id, params object[] arg)
         {
+            if (localization == null)
+                return id;
+
             var table = localization.Find(x => (string)x["id"] == id);
             if (table == null)
                 return id;
@@ -29,15 +32,22 @@ namespace VRCSDKExtension
                 var localen = table[Language.En.ToString()];
                 if (localen == null)
                     return id;
-                return Formatting(localen.ToString());
+                return Formatting(localen.ToString(), arg);
             }
-            return Formatting(str);
+            return Formatting(str, arg);
         }
 
-        private static string Formatting(string str)
+        private static string Formatting(string str, params object[] arg)
         {
             str = str.Replace("<br>", "\r\n");
-            return str;
+            try
+            {
+                return string.Format(str, arg);
+            }
+            catch
+            {
+                return str;
+            }
         }
     }
 }
