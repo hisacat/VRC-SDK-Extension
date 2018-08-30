@@ -15,10 +15,12 @@ namespace VRCSDKExtension
         }
 
         public static bool foldout_Avatar = false;
+        public static bool foldout_Avatar_SkinnedMeshRenderers = false;
         public static bool foldout_World = false;
         public static bool foldout_Util = false;
 
         public static VRC_AvatarDescriptor avatarObject;
+        public static List<SkinnedMeshRenderer> avatarSkinnedMeshRenderers;
         public static Animator avatarAnimator;
         public static Avatar avatarAnimatorAvatar;
         public static GameObject avatarModel;
@@ -33,6 +35,20 @@ namespace VRCSDKExtension
             if (avatarObject == null)
                 avatarObject = FindObjectOfType<VRC_AvatarDescriptor>();
 
+            if (avatarSkinnedMeshRenderers == null)
+                avatarSkinnedMeshRenderers = new List<SkinnedMeshRenderer>();
+            avatarSkinnedMeshRenderers.Clear();
+            if (avatarObject != null)
+            {
+                int childCount = avatarObject.transform.childCount;
+                for (int i = 0; i < childCount; i++)
+                {
+                    var obj = avatarObject.transform.GetChild(i).GetComponent<SkinnedMeshRenderer>();
+                    if (obj != null)
+                        avatarSkinnedMeshRenderers.Add(obj);
+                }
+            }
+
             avatarAnimator = null;
             if (avatarObject != null)
                 avatarAnimator = avatarObject.GetComponent<Animator>();
@@ -40,6 +56,7 @@ namespace VRCSDKExtension
             avatarAnimatorAvatar = null;
             if (avatarAnimator != null)
                 avatarAnimatorAvatar = avatarAnimator.avatar;
+
 
             avatarModel = null;
             if (avatarObject != null)
@@ -65,7 +82,7 @@ namespace VRCSDKExtension
 
         private void OnEnable()
         {
-            titleContent = new GUIContent("VRChat SDK Extension");
+            titleContent = new GUIContent(VRChatSDKExtension.ProjectName);
             maxSize = new Vector2(400, 1000);
             minSize = new Vector2(400, 400);
 
@@ -145,6 +162,25 @@ namespace VRCSDKExtension
                     GUI.enabled = true;
                     GUILayout.EndHorizontal();
                     #endregion
+                    #region Avatar SkinnedMeshRenderer<List> Field
+                    GUILayout.BeginVertical();
+                    foldout_Avatar_SkinnedMeshRenderers = EditorGUILayout.Foldout(foldout_Avatar_SkinnedMeshRenderers,
+                        Localization.GetLocalizedString("global_skinnedmeshrenderer_list"), true);
+                    GUILayout.FlexibleSpace();
+                    if (foldout_Avatar_SkinnedMeshRenderers)
+                    {
+                        GUI.enabled = false;
+                        foreach (var smr in avatarSkinnedMeshRenderers)
+                        {
+                            GUILayout.BeginHorizontal();
+                            GUILayout.FlexibleSpace();
+                            EditorGUILayout.ObjectField(smr, typeof(SkinnedMeshRenderer), true);
+                            GUILayout.EndHorizontal();
+                        }
+                        GUI.enabled = true;
+                    }
+                    GUILayout.EndVertical();
+                    #endregion
 
                     if (avatarObject == null)
                         EditorGUILayout.HelpBox(Localization.GetLocalizedString("warnning_vrc_avatardescriptor_missing"), MessageType.Warning);
@@ -169,7 +205,11 @@ namespace VRCSDKExtension
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_reset_to_base_pose")))
                         {
                             ResetToBasePose.DoResetToBasePose(avatarAnimator, avatarModel);
-
+                        }
+                        //Copy Avatar from New Model file
+                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
+                        {
+                            CopyAvatarFromNewModelFile.Init(avatarAnimator);
                         }
                         #endregion
 
