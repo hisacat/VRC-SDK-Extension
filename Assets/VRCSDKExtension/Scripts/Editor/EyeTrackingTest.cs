@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using VRCSDK2;
 
-namespace VRCSDKHelper
+namespace VRChatSDKExtension
 {
     public class EyeTrackingTestWindow : EditorWindow
     {
@@ -12,7 +12,7 @@ namespace VRCSDKHelper
         {
             EyeTrackingTestWindow window = (EyeTrackingTestWindow)EditorWindow.GetWindow(typeof(EyeTrackingTestWindow), true);
             window.avatarAnimator = avatarAnimator;
-            window.curLanguage = VRCSDKHelper.language; ;
+            window.curLanguage = VRChatSDKExtension.language; ;
             window.Show();
         }
 
@@ -30,7 +30,7 @@ namespace VRCSDKHelper
         private void OnEnable()
         {
             EditorApplication.playmodeStateChanged += LogPlayModeState;
-            titleContent = new GUIContent("VRChat SDK Helper");
+            titleContent = new GUIContent("VRChat SDK Extension");
             minSize = maxSize = new Vector2(150, 160);
             testEyeTracking = null;
             
@@ -41,12 +41,12 @@ namespace VRCSDKHelper
         {
             if (Application.isPlaying && firstSetup)
             {
-                VRCSDKHelper.SetLanguage(curLanguage);
+                VRChatSDKExtension.SetLanguage(curLanguage);
                 firstSetup = false;
             }
 
             GUILayout.BeginVertical();
-            GUILayout.Label("VRChat SDK Helper\r\n" + Localization.GetLocalizedString("avatar_testing_test_eyetracking"));
+            GUILayout.Label("VRChat SDK Extension\r\n" + Localization.GetLocalizedString("avatar_testing_test_eyetracking"));
             GUILayout.Space(4);
 
             if (Application.isEditor && Application.isPlaying)

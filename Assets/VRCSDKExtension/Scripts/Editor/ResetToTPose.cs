@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace VRCSDKHelper
+namespace VRChatSDKExtension
 {
     public static class ResetToBasePose
     {
         public static void DoResetToBasePose(Animator animator, GameObject model)
         {
             var dummyModel = GameObject.Instantiate(model);
-            dummyModel.name = "DummyModel(VRCSDKHelper - Reset To Base Pose)";
+            dummyModel.name = "DummyModel(VRChatSDKExtension - Reset To Base Pose)";
             var baseAnimator = dummyModel.GetComponent<Animator>();
 
             List<Transform> baseBoneList = new List<Transform>();

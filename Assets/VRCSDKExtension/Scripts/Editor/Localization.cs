@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace VRCSDKHelper
+namespace VRChatSDKExtension
 {
     public static class Localization
     {
@@ -20,7 +20,7 @@ namespace VRCSDKHelper
             var table = localization.Find(x => (string)x["id"] == id);
             if (table == null)
                 return id;
-            var local = table[VRCSDKHelper.language.ToString()];
+            var local = table[VRChatSDKExtension.language.ToString()];
             if (local == null)
                 return id;
             var str = local.ToString();

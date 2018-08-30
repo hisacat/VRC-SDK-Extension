@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using VRCSDK2;
 
-namespace VRCSDKHelper
+namespace VRChatSDKExtension
 {
     public enum SceneType : int
     {
@@ -19,22 +19,22 @@ namespace VRCSDKHelper
         Ja = 2,
     }
     
-    public static class VRCSDKHelper
+    public static class VRChatSDKExtension
     {
         public const string versionStr = "0.1b";
         public const int version = 0;
 
         public static Language language;
 
-        [MenuItem("VRChat SDK Helper/Open Helper Window")]
+        [MenuItem("VRChat SDK Extension/Open Helper Window")]
         public static void OpenHelperWindow()
         { 
-            HelperWindow.Init();
+            MainWindow.Init();
         }
 
         public static void SetLanguage(Language language)
         {
-            VRCSDKHelper.language = language;
+            VRChatSDKExtension.language = language;
         }
 
         public static SceneType CheckSceneType()

@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEditor;
 using VRCSDK2;
 
-namespace VRCSDKHelper
+namespace VRChatSDKExtension
 {
-    public class HelperWindow : EditorWindow
+    public class MainWindow : EditorWindow
     {
         public static void Init()
         {
-            HelperWindow window = (HelperWindow)EditorWindow.GetWindow(typeof(HelperWindow), true);
+            MainWindow window = (MainWindow)EditorWindow.GetWindow(typeof(MainWindow), true);
             window.Show();
         }
 
@@ -25,7 +25,7 @@ namespace VRCSDKHelper
 
         private static Vector2 changeLogScroll;
 
-        private static GUIStyle vrcSdkHelperHeader;
+        private static GUIStyle vrcSdkExtensionHeader;
         private static string changelog = null;
 
         private static void FindAvatar()
@@ -65,16 +65,16 @@ namespace VRCSDKHelper
 
         private void OnEnable()
         {
-            titleContent = new GUIContent("VRChat SDK Helper");
+            titleContent = new GUIContent("VRChat SDK Extension");
             maxSize = new Vector2(400, 1000);
             minSize = new Vector2(400, 400);
 
             FindAvatar();
-            vrcSdkHelperHeader = new GUIStyle
+            vrcSdkExtensionHeader = new GUIStyle
             {
                 normal =
                     {
-                        background = Resources.Load("vrcSdkHelperHeader") as Texture2D,
+                        background = Resources.Load("vrcSdkExtensionHeader") as Texture2D,
                         textColor = Color.white
                     },
                 fixedWidth = 400,
@@ -85,7 +85,7 @@ namespace VRCSDKHelper
         }
         void OnGUI()
         {
-            GUILayout.Box("", vrcSdkHelperHeader);
+            GUILayout.Box("", vrcSdkExtensionHeader);
             GUILayout.Space(4);
 
             Localization.Init();
@@ -95,22 +95,22 @@ namespace VRCSDKHelper
             GUI.backgroundColor = Color.gray;
             if (GUILayout.Button("English"))
             {
-                VRCSDKHelper.SetLanguage(Language.En);
+                VRChatSDKExtension.SetLanguage(Language.En);
             }
             if (GUILayout.Button("한국어"))
             {
-                VRCSDKHelper.SetLanguage(Language.Ko);
+                VRChatSDKExtension.SetLanguage(Language.Ko);
             }
             if (GUILayout.Button("日本語"))
             {
-                VRCSDKHelper.SetLanguage(Language.Ja);
+                VRChatSDKExtension.SetLanguage(Language.Ja);
             }
             GUI.backgroundColor = Color.white;
             GUILayout.EndHorizontal();
             GUILayout.Space(4);
             #endregion
 
-            GUILayout.Label("VRC SDK Helper. " + Localization.GetLocalizedString("global_version") + " " + VRCSDKHelper.versionStr, EditorStyles.boldLabel);
+            GUILayout.Label("VRC SDK Extension. " + Localization.GetLocalizedString("global_version") + " " + VRChatSDKExtension.versionStr, EditorStyles.boldLabel);
 
             if (Application.isPlaying)
             {
@@ -118,7 +118,7 @@ namespace VRCSDKHelper
                 return;
             }
 
-            var sceneType = VRCSDKHelper.CheckSceneType();
+            var sceneType = VRChatSDKExtension.CheckSceneType();
 
             #region Avatar
             GUILayout.BeginVertical(GUI.skin.box);
@@ -218,7 +218,7 @@ namespace VRCSDKHelper
             }
             if (GUILayout.Button(Localization.GetLocalizedString("mainmenu_checkforupdates")))
             {
-                if (EditorUtility.DisplayDialog("VRC SDK Helper", "Update check function is preparing\r\nOpen Github?", "Yes", "No"))
+                if (EditorUtility.DisplayDialog("VRC SDK Extension", "Update check function is preparing\r\nOpen Github?", "Yes", "No"))
                 {
                     Application.OpenURL("https://github.com/hisacat/VRC-SDK-Helper/");
                 }
