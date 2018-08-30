@@ -3,7 +3,7 @@
 Unity에서 보다 편리하게 VRC SDK를 사용할 수 있는 기능들을 추가했습니다.<br>
 *Read this in other languages: [English](README.md), [한국어](README.ko.md), [日本語](README.ja.md).*
 
-![](Media/WindowPreview.png)
+![](Media/VRCSDKExt_WindowPreview.png)
 
 이 프로젝트가 도움이 되었다면, 기부 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VY9PA73VKC4ZS) 를 부탁드려요!
 
@@ -11,7 +11,7 @@ Unity에서 보다 편리하게 VRC SDK를 사용할 수 있는 기능들을 추
 먼저, unitypackage를 설치합니다.<br>
 상단에 "VRC SDK Helper" 메뉴가 표시됩니다.<br>
 "Open Helper Window"버튼을 선택해주세요!<br>
-![](Media/MenuItem.png)
+![](Media/VRCSDKExt_MenuItem.png)
 
 ## 기능
 * 아바타 관련

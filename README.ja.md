@@ -3,7 +3,7 @@
 Unityよりも便利にVRC SDKを使うことができる機能を追加しました。<br>
 *Read this in other languages: [English](README.md), [한국어](README.ko.md), [日本語](README.ja.md).*
 
-![](Media/WindowPreview.png)
+![](Media/VRCSDKExt_WindowPreview.png)
 
 このプロジェクトが役立つたら、Donate [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VY9PA73VKC4ZS) をお願いします!
 
@@ -11,7 +11,7 @@ Unityよりも便利にVRC SDKを使うことができる機能を追加しま�
 まず、unitypackageをインストールします。<br>
 上に "VRC SDK Helper"メニューが表示されます。<br>
 "Open Helper Window"ボタンを選択してください！<br>
-![](Media/MenuItem.png)
+![](Media/VRCSDKExt_MenuItem.png)
 
 ## 기능
 *アバター関連
