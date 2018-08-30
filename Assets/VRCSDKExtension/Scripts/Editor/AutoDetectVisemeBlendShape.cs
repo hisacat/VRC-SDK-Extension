@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using VRCSDK2;
 
-namespace VRChatSDKExtension
+namespace VRCSDKExtension
 {
     public static class AutoDetectVisemeBlendShape
     {

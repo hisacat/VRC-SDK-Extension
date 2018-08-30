@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace VRChatSDKExtension
+namespace VRCSDKExtension
 {
     public static class Localization
     {

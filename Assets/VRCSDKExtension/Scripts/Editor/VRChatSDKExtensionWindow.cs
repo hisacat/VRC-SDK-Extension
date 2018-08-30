@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using VRCSDK2;
 
-namespace VRChatSDKExtension
+namespace VRCSDKExtension
 {
     public class MainWindow : EditorWindow
     {
