@@ -21,6 +21,8 @@ namespace VRCSDKExtension
     
     public static class VRChatSDKExtension
     {
+        public const string ProjectName = "VRChat SDK Extension";
+
         public const string versionStr = "0.1b";
         public const int version = 0;
 
