@@ -7,6 +7,8 @@ namespace VRCSDKExtension
 {
     public static class ResetToBasePose
     {
+        //ToDo : rest pose with SkinnedMeshRenderer's Bone? Not Animator.
+        //SkinnedMeshRenderer has more Bones
         public static void DoResetToBasePose(Animator animator, GameObject model)
         {
             var dummyModel = GameObject.Instantiate(model);
