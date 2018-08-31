@@ -12,7 +12,6 @@ namespace VRCSDKExtension
         {
             EyeTrackingTestWindow window = (EyeTrackingTestWindow)EditorWindow.GetWindow(typeof(EyeTrackingTestWindow), true);
             window.avatarAnimator = avatarAnimator;
-            window.curLanguage = VRChatSDKExtension.language; ;
             window.Show();
         }
 
@@ -23,9 +22,6 @@ namespace VRCSDKExtension
 
         private Transform leftEyeTrf = null;
         private Transform rightEyeTrf = null;
-
-        private Language curLanguage;
-        private bool firstSetup = true;
 
         private void OnEnable()
         {
@@ -39,12 +35,6 @@ namespace VRCSDKExtension
 
         private void OnGUI()
         {
-            if (Application.isPlaying && firstSetup)
-            {
-                VRChatSDKExtension.SetLanguage(curLanguage);
-                firstSetup = false;
-            }
-
             GUILayout.BeginVertical();
             GUILayout.Label("VRChat SDK Extension\r\n" + Localization.GetLocalizedString("avatar_testing_test_eyetracking"));
             GUILayout.Space(4);

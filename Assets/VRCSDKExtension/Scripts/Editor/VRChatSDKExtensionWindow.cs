@@ -204,10 +204,15 @@ namespace VRCSDKExtension
                         {
                             AutoDetectVisemeBlendShape.DoAutoDetectVisemeBlendShape(avatarObject);
                         }
-                        //Reset to base pose
-                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_reset_to_base_pose")))
+                        //Reset to model based pose
+                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_reset_to_model_based_pose")))
                         {
-                            ResetToBasePose.DoResetToBasePose(avatarAnimator, avatarModel);
+                            ResetToModelBasePose.DoResetToModelBasePose(avatarSkins, avatarModel); 
+                        }
+                        //Reset to T-Pose pose
+                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_reset_to_t_pose")))
+                        {
+                            ResetToTPose.DoResetToTPose(avatarAnimator, avatarModel);
                         }
                         //Copy Avatar from New Model file
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
