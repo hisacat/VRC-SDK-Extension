@@ -20,7 +20,7 @@ namespace VRCSDKExtension
         public static bool foldout_Util = false;
 
         public static VRC_AvatarDescriptor avatarObject;
-        public static List<SkinnedMeshRenderer> avatarSkinnedMeshRenderers;
+        public static List<SkinnedMeshRenderer> avatarSkins;
         public static Animator avatarAnimator;
         public static Avatar avatarAnimatorAvatar;
         public static GameObject avatarModel;
@@ -35,9 +35,9 @@ namespace VRCSDKExtension
             if (avatarObject == null)
                 avatarObject = FindObjectOfType<VRC_AvatarDescriptor>();
 
-            if (avatarSkinnedMeshRenderers == null)
-                avatarSkinnedMeshRenderers = new List<SkinnedMeshRenderer>();
-            avatarSkinnedMeshRenderers.Clear();
+            if (avatarSkins == null)
+                avatarSkins = new List<SkinnedMeshRenderer>();
+            avatarSkins.Clear();
             if (avatarObject != null)
             {
                 int childCount = avatarObject.transform.childCount;
@@ -45,7 +45,7 @@ namespace VRCSDKExtension
                 {
                     var obj = avatarObject.transform.GetChild(i).GetComponent<SkinnedMeshRenderer>();
                     if (obj != null)
-                        avatarSkinnedMeshRenderers.Add(obj);
+                        avatarSkins.Add(obj);
                 }
             }
 
@@ -131,7 +131,7 @@ namespace VRCSDKExtension
 
             if (Application.isPlaying)
             {
-                EditorGUILayout.HelpBox("Editor is Playing", MessageType.Warning);
+                EditorGUILayout.HelpBox(Localization.GetLocalizedString("warnning_editor_is_playing"), MessageType.Warning);
                 return;
             }
 
@@ -144,6 +144,8 @@ namespace VRCSDKExtension
                 if (foldout_Avatar)
                 {
                     FindAvatar();
+
+                    #region Show Avatar's Info
                     #region Avatar Object Field
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(Localization.GetLocalizedString("global_avatar"));
@@ -170,7 +172,7 @@ namespace VRCSDKExtension
                     if (foldout_Avatar_SkinnedMeshRenderers)
                     {
                         GUI.enabled = false;
-                        foreach (var smr in avatarSkinnedMeshRenderers)
+                        foreach (var smr in avatarSkins)
                         {
                             GUILayout.BeginHorizontal();
                             GUILayout.FlexibleSpace();
@@ -180,6 +182,7 @@ namespace VRCSDKExtension
                         GUI.enabled = true;
                     }
                     GUILayout.EndVertical();
+                    #endregion
                     #endregion
 
                     if (avatarObject == null)
@@ -209,7 +212,7 @@ namespace VRCSDKExtension
                         //Copy Avatar from New Model file
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
                         {
-                            CopyAvatarFromNewModelFile.Init(avatarAnimator);
+                            CopyAvatarFromNewModelFileWindow.Init(avatarObject, avatarSkins, avatarModel);
                         }
                         #endregion
 

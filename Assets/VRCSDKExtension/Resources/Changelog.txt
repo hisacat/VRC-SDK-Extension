@@ -1,12 +1,19 @@
 Changelog:
 
 0.1b (dev) - 2018.08.31
-    -Name Change
-     "VRChat SDK  Helper" to "VRChat SDK  Extension"
+    Added
+     -Added 'Copy Avatar from New Model File' function
+    Changed
+     -Name Change
+      "VRChat SDK Helper" to "VRChat SDK Extension"
+
+    Todo
+     -Lose selected language when editor playing
 
 0.1b (dev) - 2018.08.29
-    -Make Helper Window
-    -Added 'Detect Viseme Blend Shape' function
-    -Added 'Reset to Base Pose(T-Pose)' function
-    -Added 'Test EyeTracking' function
-    -Added Localization
+    Added
+     -Make Helper Window
+     -Added 'Detect Viseme Blend Shape' function
+     -Added 'Reset to Base Pose(T-Pose)' function
+     -Added 'Test EyeTracking' function
+     -Added Localization
