@@ -26,7 +26,6 @@ namespace VRCSDKExtension
             this.language = language;
         }
 
-
         private GlobalSettings() { }
 
         public static GlobalSettings Settings
