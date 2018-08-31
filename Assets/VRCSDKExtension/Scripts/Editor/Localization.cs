@@ -23,7 +23,7 @@ namespace VRCSDKExtension
             var table = localization.Find(x => (string)x["id"] == id);
             if (table == null)
                 return id;
-            var local = table[VRChatSDKExtension.language.ToString()];
+            var local = table[GlobalSettings.Settings.Language.ToString()];
             if (local == null)
                 return id;
             var str = local.ToString();

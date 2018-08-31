@@ -12,12 +12,6 @@ namespace VRCSDKExtension
         Avatar = 0,
         World = 1,
     }
-    public enum Language : int
-    {
-        En = 0,
-        Ko = 1,
-        Ja = 2,
-    }
     
     public static class VRChatSDKExtension
     {
@@ -25,18 +19,11 @@ namespace VRCSDKExtension
 
         public const string versionStr = "0.1b";
         public const int version = 0;
-
-        public static Language language;
-
+        
         [MenuItem("VRChat SDK Extension/Open Helper Window")]
         public static void OpenHelperWindow()
         { 
             MainWindow.Init();
-        }
-
-        public static void SetLanguage(Language language)
-        {
-            VRChatSDKExtension.language = language;
         }
 
         public static SceneType CheckSceneType()

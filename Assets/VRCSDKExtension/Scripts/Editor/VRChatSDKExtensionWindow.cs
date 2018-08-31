@@ -112,15 +112,15 @@ namespace VRCSDKExtension
             GUI.backgroundColor = Color.gray;
             if (GUILayout.Button("English"))
             {
-                VRChatSDKExtension.SetLanguage(Language.En);
+                GlobalSettings.Settings.SetLanguage(Language.En);
             }
             if (GUILayout.Button("한국어"))
             {
-                VRChatSDKExtension.SetLanguage(Language.Ko);
+                GlobalSettings.Settings.SetLanguage(Language.Ko);
             }
             if (GUILayout.Button("日本語"))
             {
-                VRChatSDKExtension.SetLanguage(Language.Ja);
+                GlobalSettings.Settings.SetLanguage(Language.Ja);
             }
             GUI.backgroundColor = Color.white;
             GUILayout.EndHorizontal();
@@ -207,7 +207,7 @@ namespace VRCSDKExtension
                         //Reset to model based pose
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_reset_to_model_based_pose")))
                         {
-                            ResetToModelBasePose.DoResetToModelBasePose(avatarSkins, avatarModel); 
+                            ResetToModelBasePose.DoResetToModelBasePose(avatarSkins, avatarModel);
                         }
                         //Reset to T-Pose pose
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_reset_to_t_pose")))
