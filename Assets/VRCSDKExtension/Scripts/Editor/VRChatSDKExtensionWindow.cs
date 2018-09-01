@@ -20,6 +20,7 @@ namespace VRCSDKExtension
         public static bool foldout_Util = false;
 
         public static VRC_AvatarDescriptor avatarObject;
+        public static Transform AvatarTransform { get { return avatarObject == null ? null : avatarObject.transform; } }
         public static List<SkinnedMeshRenderer> avatarSkins;
         public static Animator avatarAnimator;
         public static Avatar avatarAnimatorAvatar;
@@ -212,8 +213,22 @@ namespace VRCSDKExtension
                         //Set to T-Pose pose
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_set_to_t_pose")))
                         {
-                            SetToTPose.DoSetTPose(avatarAnimator, avatarModel);
+                            SetToTPose.DoSetTPose(avatarAnimator, AvatarTransform);
                         }
+                        /*
+                        if (GUILayout.Button("Create Test Pose From AnimationClip"))
+                        {
+                            SetToTPose.CreatePoseFromAnimationClip();
+                        }
+                        if (GUILayout.Button("Save Test Pose"))
+                        {
+                            SetToTPose.SaveTestPose(avatarAnimator, AvatarTransform);
+                        }
+                        if (GUILayout.Button("Apply Test Pose"))
+                        {
+                            SetToTPose.ApplyTestPose(avatarAnimator, AvatarTransform);
+                        }
+                        */
                         //Copy Avatar from New Model file
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
                         {
