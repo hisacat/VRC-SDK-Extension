@@ -1,5 +1,10 @@
 Changelog:
 
+0.1b (dev) - 2018.09.01
+    Fixed
+     -Fix loose Language setting when Editor plying.
+      Now setting file managed by ScriptableObject asset
+
 0.1b (dev) - 2018.08.31
     Added
      -Added 'Copy Avatar from New Model File' function
