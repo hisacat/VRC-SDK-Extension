@@ -1,17 +1,29 @@
 Changelog:
 
 0.1b (dev) - 2018.09.01
+    Added
+     -Added 'Set to T-Pose' function
+     -(In code)Added Human Pose Managed system added
+
     Fixed
      -Fix loose Language setting when Editor plying.
       Now setting file managed by ScriptableObject asset
+     -Set to T-Pose bug fixed.
+
+    Todo
+     -Animation Override Controller Managed
+	  for manage Avatar Animations
+     -Fix 'Copy Avatar from New Model' mesh missing bug.
 
 0.1b (dev) - 2018.08.31
     Added
      -Added 'Copy Avatar from New Model File' function
+     -Added 'Set to Model Based pose' function
+
     Changed
      -Name Change
       "VRChat SDK Helper" to "VRChat SDK Extension"
-
+     -'Reset to Base Pose(T-Pose)' function removed. (lagacy)
     Todo
      -Lose selected language when editor playing
 
