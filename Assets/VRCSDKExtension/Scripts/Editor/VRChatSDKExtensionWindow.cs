@@ -209,13 +209,11 @@ namespace VRCSDKExtension
                         {
                             ResetToModelBasePose.DoResetToModelBasePose(avatarSkins, avatarModel);
                         }
-                        /*
-                        //Reset to T-Pose pose
-                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_reset_to_t_pose")))
+                        //Set to T-Pose pose
+                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_set_to_t_pose")))
                         {
-                            ResetToTPose.DoResetToTPose(avatarAnimator, avatarModel);
+                            SetToTPose.DoSetTPose(avatarAnimator, avatarModel);
                         }
-                        */
                         //Copy Avatar from New Model file
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
                         {
