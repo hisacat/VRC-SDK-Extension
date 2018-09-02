@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEditor;
 using VRCSDK2;
 using VRC.Core;
-using System.Reflection;
 
 namespace VRCSDKExtension
 {
-    public class CopyAvatarFromNewModelFileWindow : EditorWindow
+    public class CopyAvatarFromNewModelFileWindowLagacy : EditorWindow
     {
         public static void Init(VRC_AvatarDescriptor avatarObject, List<SkinnedMeshRenderer> avatarSkins, GameObject avatarModel)
         {
-            CopyAvatarFromNewModelFileWindow window = (CopyAvatarFromNewModelFileWindow)EditorWindow.GetWindow(typeof(CopyAvatarFromNewModelFileWindow), true);
+            CopyAvatarFromNewModelFileWindowLagacy window = (CopyAvatarFromNewModelFileWindowLagacy)EditorWindow.GetWindow(typeof(CopyAvatarFromNewModelFileWindowLagacy), true);
             window.avatarObject = avatarObject;
             window.avatarSkins = avatarSkins;
             window.Show();
@@ -408,11 +407,11 @@ namespace VRCSDKExtension
                                     continue;
                             }
                             #endregion
-                            
+
                             Debug.Log(component.GetType() + " " + property.Name);
                             var value = property.GetValue(component, null);
                             value = CheckReferencedValue(value, avatarTrfDic);
-                            
+
                             newProperty.SetValue(addedcomponent, value, null);
                         }
                         #endregion
