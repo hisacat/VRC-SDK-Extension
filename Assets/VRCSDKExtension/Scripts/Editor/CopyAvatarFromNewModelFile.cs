@@ -10,6 +10,40 @@ using System;
 
 namespace VRCSDKExtension
 {
+    public class LogWindow : EditorWindow
+    {
+        public static void Init(string log)
+        {
+            LogWindow window = (LogWindow)EditorWindow.GetWindow(typeof(LogWindow), true);
+            window.log = log;
+            window.Show();
+        }
+
+        private string log;
+        Vector2 scrollValue;
+
+        private void OnEnable()
+        {
+            titleContent = new GUIContent(VRChatSDKExtension.ProjectName);
+            scrollValue = Vector2.zero;
+        }
+
+        private void OnGUI()
+        {
+            GUILayout.BeginVertical();
+            GUILayout.Label("VRChat SDK Extension\r\n" + Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file"));
+            GUILayout.Space(4);
+
+            GUILayout.BeginScrollView(scrollValue);
+            GUILayout.TextField(log);
+            GUILayout.EndScrollView();
+
+            if (GUILayout.Button("Copy to Clipboard"))
+                GUIUtility.systemCopyBuffer = log;
+
+            GUILayout.EndVertical();
+        }
+    }
     public class CopyAvatarFromNewModelFileWindow : EditorWindow
     {
         public static void Init(VRC_AvatarDescriptor avatarObject, List<SkinnedMeshRenderer> avatarSkins, GameObject avatarModel)
@@ -25,6 +59,10 @@ namespace VRCSDKExtension
         private GameObject selectedModelAsset = null;
 
         private bool sameNameFoldOut = false;
+        private bool traceConsoleLog = false;
+        private string consoleLog = "";
+        private List<string> consoleLogList = null;
+        private int traceConsoleLogCount = 5;
 
         private void OnEnable()
         {
@@ -121,6 +159,8 @@ namespace VRCSDKExtension
             GUILayout.EndVertical();
 
             GUI.enabled = (avatarObject != null && selectedModelAsset != null && sames.Count <= 0);
+
+            traceConsoleLog = EditorGUILayout.ToggleLeft("Trace Log", traceConsoleLog);
             if (GUILayout.Button(Localization.GetLocalizedString("global_create"), GUILayout.Height(30)))
             {
                 //check selectedModelAsset is model file
@@ -154,9 +194,40 @@ namespace VRCSDKExtension
                         return;
                     }
                 }
-                CopyAvatar();
+
+                Application.logMessageReceived += HandleLog;
+                consoleLog = "AvatarCopyFromNewModelFile Trace Console Log\r\nversion : " + VRChatSDKExtension.versionStr + "\r\n\r\n";
+                if (consoleLogList == null)
+                    consoleLogList = new List<string>();
+                consoleLogList.Clear();
+
+                try
+                {
+                    CopyAvatar();
+                }
+                catch { }
+
+                Application.logMessageReceived -= HandleLog;
+                if (traceConsoleLog)
+                    LogWindow.Init(consoleLog);
             }
             GUI.enabled = true;
+        }
+        void HandleLog(string logString, string stackTrace, LogType type)
+        {
+            consoleLogList.Add(type.ToString() + " : " + logString + "\r\n");
+
+            if (type == LogType.Warning || type == LogType.Error)
+            {
+                var allLogCount = consoleLogList.Count;
+                var traceCount = traceConsoleLogCount;
+                if (allLogCount <= traceCount)
+                    traceCount = allLogCount;
+
+                for (int i = 0; i < traceCount; i++)
+                    consoleLog += consoleLogList[allLogCount - (traceCount - i)];
+                consoleLog += "------------------------------\r\n";
+            }
         }
 
         private void CopyAvatar()
@@ -207,8 +278,14 @@ namespace VRCSDKExtension
                         break;
                     }
                 }
+
+                //add root
+                if (AvatarObj == avatarTrf)
+                {
+                    avatarTrfDic.Add(AvatarObj, newAvatarTrf);
+                }
                 //create user edited gameobject
-                if (!avatarTrfDic.ContainsKey(AvatarObj))
+                else if (!avatarTrfDic.ContainsKey(AvatarObj))
                 {
                     var newAvatarObj = new GameObject(AvatarObj.name).transform;
                     newAvatarObj.parent = newAvatarTrf;
@@ -310,7 +387,6 @@ namespace VRCSDKExtension
                         addedAnimator.cullingMode = animator.cullingMode;
                         #endregion
                     }
-
                     else
                     {
                         #region copy fields
@@ -323,7 +399,16 @@ namespace VRCSDKExtension
                             var newField = addedcomponent.GetType().GetField(field.Name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 
                             var value = field.GetValue(component);
-                            value = CheckReferencedValue(value, avatarTrfDic);
+                            #region skip some Fields
+                            if (component.GetType() == typeof(UnityEngine.Video.VideoPlayer))
+                            {
+                                if (field.Name == "prepareCompleted")
+                                    continue;
+                            }
+                            #endregion
+                            if (traceConsoleLog)
+                                Debug.Log("VRCSDKExtension : Copy field " + field.Name + " in " + component.GetType());
+                            value = CreateReferencedValue(value, avatarTrfDic, component.GetType());
                             newField.SetValue(addedcomponent, value);
                         }
                         #endregion
@@ -335,13 +420,8 @@ namespace VRCSDKExtension
                         for (int propertyIndex = 0; propertyIndex < propertiesCount; propertyIndex++)
                         {
                             var property = properties[propertyIndex];
-                            var newProperty = addedcomponent.GetType().GetProperty(property.Name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-
-                            if (!property.CanWrite || !property.CanRead)
-                                continue;
-
                             #region skip some properties
-                            if (property.ReflectedType == typeof(Rigidbody))
+                            if (component.GetType() == typeof(Rigidbody))
                             {
                                 if (property.Name == "sleepVelocity")
                                     continue;
@@ -350,54 +430,54 @@ namespace VRCSDKExtension
                                 if (property.Name == "useConeFriction")
                                     continue;
                             }
-                            if (property.ReflectedType == typeof(MeshFilter))
+                            if (component.GetType() == typeof(MeshFilter))
                             {
                                 if (property.Name == "mesh")
                                     continue;
                             }
-                            if (property.ReflectedType == typeof(MeshRenderer))
+                            if (component.GetType() == typeof(MeshRenderer))
                             {
                                 if (property.Name == "material")
                                     continue;
                                 if (property.Name == "materials")
                                     continue;
                             }
-                            if (property.ReflectedType == typeof(SkinnedMeshRenderer))
+                            if (component.GetType() == typeof(SkinnedMeshRenderer))
                             {
                                 if (property.Name == "material")
                                     continue;
                                 if (property.Name == "materials")
                                     continue;
                             }
-                            if (property.ReflectedType == typeof(ParticleSystemRenderer))
+                            if (component.GetType() == typeof(ParticleSystemRenderer))
                             {
                                 if (property.Name == "material")
                                     continue;
                                 if (property.Name == "materials")
                                     continue;
                             }
-                            if (property.ReflectedType == typeof(ParticleRenderer))
+                            if (component.GetType() == typeof(ParticleRenderer))
                             {
                                 if (property.Name == "material")
                                     continue;
                                 if (property.Name == "materials")
                                     continue;
                             }
-                            if (property.ReflectedType == typeof(LineRenderer))
+                            if (component.GetType() == typeof(LineRenderer))
                             {
                                 if (property.Name == "material")
                                     continue;
                                 if (property.Name == "materials")
                                     continue;
                             }
-                            if (property.ReflectedType == typeof(TrailRenderer))
+                            if (component.GetType() == typeof(TrailRenderer))
                             {
                                 if (property.Name == "material")
                                     continue;
                                 if (property.Name == "materials")
                                     continue;
                             }
-                            if (property.ReflectedType == typeof(Animator))
+                            if (component.GetType() == typeof(Animator))
                             {
                                 if (property.Name == "bodyPosition")
                                     continue;
@@ -406,10 +486,26 @@ namespace VRCSDKExtension
                                 if (property.Name == "playbackTime")
                                     continue;
                             }
+                            if (component.GetType() == typeof(UnityEngine.Video.VideoPlayer))
+                            {
+                                if (property.Name == "url")
+                                    continue;
+                            }
+                            if (component.GetType() == typeof(Camera))
+                            {
+                                if (property.Name == "layerCullDistances")
+                                    continue;
+                            }
                             #endregion
+                            if (traceConsoleLog)
+                                Debug.Log("VRCSDKExtension : Copy property " + property.Name + " in " + component.GetType());
+                            var newProperty = addedcomponent.GetType().GetProperty(property.Name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+                            if (!property.CanWrite || !property.CanRead)
+                                continue;
 
                             var value = property.GetValue(component, null);
-                            value = CheckReferencedValue(value, avatarTrfDic);
+                            value = CreateReferencedValue(value, avatarTrfDic, component.GetType());
 
                             newProperty.SetValue(addedcomponent, value, null);
                         }
@@ -423,10 +519,116 @@ namespace VRCSDKExtension
             Localization.GetLocalizedString("global_done"),
             "Ok");
         }
-        public static List<T> CreateList<T>(params T[] elements)
+
+        private object CreateReferencedValue(object value, Dictionary<Transform, Transform> avatarTrfDic, Type debugtype)
         {
-            return new List<T>(elements);
+            //if it null
+            if (value == null)
+                return value;
+
+            //object reference change by transform dictionary.
+            if (value is Component)
+            {
+                var componentField = (value as Component); //It contains Transform
+                if (componentField == null)
+                    return value;
+
+                if (avatarTrfDic.ContainsKey(componentField.transform))
+                    value = avatarTrfDic[componentField.transform].GetComponent(value.GetType());
+                return value;
+            }
+            else if (value is GameObject)
+            {
+                var gameobjectField = (value as GameObject);
+                if (gameobjectField == null)
+                    return value;
+
+                if (avatarTrfDic.ContainsKey(gameobjectField.transform))
+                    value = avatarTrfDic[gameobjectField.transform].gameObject;
+                return value;
+            }
+            else if (value is Transform)
+            {
+                var transformField = (value as Transform);
+                if (transformField == null)
+                    return value;
+
+                if (avatarTrfDic.ContainsKey(transformField))
+                    value = avatarTrfDic[transformField].gameObject;
+                return value;
+            }
+            //skip UnityEngine's Components
+            else if (value.GetType().Namespace == "UnityEngine")
+            {
+                return value;
+            }
+
+            //if it user-created struct or Class
+            if (value.GetType().Assembly.GetName().Name != "mscorlib" &&
+           ((value.GetType().IsValueType && !value.GetType().IsPrimitive) ||
+            (value.GetType().IsClass && !(value is System.Collections.IList))))
+            {
+                var cloneValue = Activator.CreateInstance(value.GetType());
+
+                var fields = value.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                int fieldCount = fields.Length;
+                for (int fieldIndex = 0; fieldIndex < fieldCount; fieldIndex++)
+                {
+                    var field = fields[fieldIndex];
+                    var filedValue = field.GetValue(value);
+
+                    filedValue = CreateReferencedValue(filedValue, avatarTrfDic, debugtype);
+
+                    field.SetValue(cloneValue, filedValue);
+                }
+                return cloneValue;
+            }
+
+            //if it iList (array, List<T>)
+            if (value is System.Collections.IList)
+            {
+                //Clone iList
+                {
+                    var enumerableValues = value as System.Collections.IList;
+
+                    //when Array
+                    if (value is object[])
+                        value = (value as object[]).Clone();
+                    //when List<T>
+                    else if (value is IList && value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>)))
+                    {
+                        Type elementType = enumerableValues.AsQueryable().ElementType;
+                        Type listGenericType = typeof(List<>);
+                        Type listType = listGenericType.MakeGenericType(elementType);
+                        ConstructorInfo ci = listType.GetConstructor(new Type[] { });
+                        var list = ci.Invoke(new object[] { });
+
+                        var resultEnumerableValues = list as System.Collections.IList;
+                        foreach (var enumerableValue in enumerableValues)
+                            resultEnumerableValues.Add(enumerableValue);
+
+                        value = list;
+                    }
+                    else //The another iList?
+                    {
+                        if (traceConsoleLog)
+                            Debug.LogError("Unknown IList exists. type : " + value.GetType() + ", element type : " + enumerableValues.AsQueryable().ElementType);
+                    }
+                }
+                //Recursion for Array-Inside object reference change by transform dictionary. 
+                {
+                    var enumerableValues = value as System.Collections.IList;
+                    int count = enumerableValues.Count;
+                    for (int i = 0; i < count; i++)
+                    {
+                        var referencedObj = CreateReferencedValue(enumerableValues[i], avatarTrfDic, debugtype);
+                        enumerableValues[i] = referencedObj;
+                    }
+                }
+            }
+            return value;
         }
+
         private static object CheckReferencedValue(object value, Dictionary<Transform, Transform> avatarTrfDic)
         {
             if (value != null)
@@ -436,18 +638,24 @@ namespace VRCSDKExtension
                     var enumerableValues = value as System.Collections.IList;
                     foreach (var enumerableValue in enumerableValues)
                         CheckReferencedValue(enumerableValue, avatarTrfDic);
-                    
+
                     if (value is object[])
                         return (value as object[]).Clone();
 
                     //Todo List COPY!!!!
                     if (value is IList && value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>)))
                     {
+                        //FUCK
                         Type elementType = enumerableValues.AsQueryable().ElementType;
                         Type listGenericType = typeof(List<>);
                         Type listType = listGenericType.MakeGenericType(elementType);
                         ConstructorInfo ci = listType.GetConstructor(new Type[] { });
-                        var list = ci.Invoke(value, new object[] { });
+                        var list = ci.Invoke(new object[] { });
+
+                        var resultEnumerableValues = list as System.Collections.IList;
+                        foreach (var enumerableValue in enumerableValues)
+                            resultEnumerableValues.Add(enumerableValue);
+
                         return list;
                         //return (value as List<Rigidbody>).;
                     }
