@@ -33,12 +33,13 @@ namespace VRCSDKExtension
 
         public static void CreatePoseAsset(Animator animator, Transform model, string name, Texture2D thumbnail = null, string path = "")
         {
-            //Todo - check another file in same path
             if (string.IsNullOrEmpty(path))
                 path = PoseAssetDir;
             if (!(path.EndsWith("/") || path.EndsWith("\\")))
                 path = path + "/";
             path = path + name + ".asset";
+
+            path = AssetDatabase.GenerateUniqueAssetPath(path);
 
             using (HumanPoseHandler humanPoseHandler = new HumanPoseHandler(animator.avatar, model))
             {
@@ -70,12 +71,12 @@ namespace VRCSDKExtension
 
         public static void CreatePoseAssetFronAnimationClip(AnimationClip clip, float time, string name, Texture2D thumbnail = null, string path = "")
         {
-            //Todo - check another file in same path
             if (string.IsNullOrEmpty(path))
                 path = PoseAssetDir;
             if (!(path.EndsWith("/") || path.EndsWith("\\")))
                 path = path + "/";
             path = path + name + ".asset";
+            path = AssetDatabase.GenerateUniqueAssetPath(path);
 
             if (clip == null)
             {
