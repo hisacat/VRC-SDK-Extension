@@ -12,10 +12,10 @@ avatar_helper_copy_avatar_from_new_model_file,Copy Avatar from New Model File,�
 avatar_helper_copy_avatar_from_new_model_file_warnning_not_model_file,{0} seems not a model file,{0} seems not a model file,{0} seems not a model file
 global_skinnedmeshrenderer_list,Skinned Mesh Renderer List,Skinned Mesh Renderer 목록,Skinned Mesh Renderer リスト
 avatar_helper_detect_viseme_blend_shape,Lipsync - Detect Viseme (Viseme Blend Shape),립싱크 - Viseme 자동 할당 (Viseme Blend Shape),リップシンク - Viseme自動代入（Viseme Blend Shape）
-avatar_helper_detect_viseme_blend_shape_dialog_body_object_not_exits,Body GameObject is not exist,Body 게임오브젝트를 찾을 수 없습니다.,Bodyゲームオブジェクトを見つけることができません
-avatar_helper_detect_viseme_blend_shape_dialog_face_mesh_not_exits,Face Mesh is not exist<br>Use Mesh named by 'Body'?,Face Mesh를 찾을 수 없습니다.<br>Body라는 이름을 가진 Mesh를 사용할까요?,Face Meshがありません<br> Bodyという名前を持つMeshを使用しましょうか？
+avatar_helper_detect_viseme_blend_shape_dialog_body_object_not_exists,Body GameObject is not exist,Body 게임오브젝트를 찾을 수 없습니다.,Bodyゲームオブジェクトを見つけることができません
+avatar_helper_detect_viseme_blend_shape_dialog_face_mesh_not_exists,Face Mesh is not exist<br>Use Mesh named by 'Body'?,Face Mesh를 찾을 수 없습니다.<br>Body라는 이름을 가진 Mesh를 사용할까요?,Face Meshがありません<br> Bodyという名前を持つMeshを使用しましょうか？
 avatar_helper_detect_viseme_blend_shape_dialog_please_set_face_mesh,Please set Face Mesh,Face Mesh를 할당해 주세요.,Face Meshを代入してください
-avatar_helper_detect_viseme_blend_shape_dialog_skinned_mesh_renderer_not_exits,There are No Skinned Mesh Renderer in Body GameObject,Body Mesh에 Skinned Mesh Renderer가 없습니다.,Body MeshにSkinned Mesh Rendererがありません
+avatar_helper_detect_viseme_blend_shape_dialog_skinned_mesh_renderer_not_exists,There are No Skinned Mesh Renderer in Body GameObject,Body Mesh에 Skinned Mesh Renderer가 없습니다.,Body MeshにSkinned Mesh Rendererがありません
 avatar_helper_set_to_t_pose,Set to T-Pose,T 포즈로 설정,Tポーズに設定
 avatar_helper_reset_to_model_based_pose,Reset to Model Based Pose,모델 포즈로 초기화,モデルのポーズにリセット
 avatar_testing_test_eyetracking,Test EyeTracking,아이트래킹 테스트,アイトラッキングテスト

@@ -14,7 +14,7 @@ namespace VRCSDKExtension
             if (avatar.VisemeSkinnedMesh == null)
             {
                 if (EditorUtility.DisplayDialog(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape"),
-                    Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_face_mesh_not_exits"),
+                    Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_face_mesh_not_exists"),
                     "Ok", "Cancel"))
                 {
                     var body = avatar.transform.Find("Body");
@@ -24,7 +24,7 @@ namespace VRCSDKExtension
                         if (sm == null)
                         {
                             EditorUtility.DisplayDialog(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape"),
-                                Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_body_object_not_exits"),
+                                Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_body_object_not_exists"),
                                 "Ok");
                             return;
                         }
@@ -34,7 +34,7 @@ namespace VRCSDKExtension
                     else
                     {
                         EditorUtility.DisplayDialog(Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape"),
-                            Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_skinned_mesh_renderer_not_exits"),
+                            Localization.GetLocalizedString("avatar_helper_detect_viseme_blend_shape_dialog_skinned_mesh_renderer_not_exists"),
                             "Ok");
                         return;
                     }
