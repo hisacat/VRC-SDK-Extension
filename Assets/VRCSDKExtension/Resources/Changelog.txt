@@ -4,6 +4,10 @@ Changelog:
     Added
      -Added 'AnimationClip Path Editor'
 
+    Fix
+     -Fix 'Copy Avatar from New Model' mesh missing bug.
+     -Now 'Copy Avatar from New Model's deep copy works.
+
 0.1b (dev) - 2018.09.01
     Added
      -Added 'Set to T-Pose' function
