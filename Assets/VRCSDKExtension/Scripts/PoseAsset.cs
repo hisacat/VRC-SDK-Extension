@@ -10,7 +10,9 @@ namespace VRCSDKExtension
     public class PoseAsset : ScriptableObject
     {
         private const string TPoseFilePath = "Assets/VRCSDKExtension/Resources/tpose.asset";
-        private const string PoseAssetDir = "Assets/VRCSDKExtension/Resources/Pose/";
+        private const string PoseAssetDir = "Assets/VRCSDKExtension/Resources/Pose";
+        private const string PoseFolderDir = "Assets/VRCSDKExtension/Resources";
+        private const string PoseFolderName = "Pose";
 
         [SerializeField]
         private string poseName = null;
@@ -31,15 +33,24 @@ namespace VRCSDKExtension
         public const int HumanBodyBoneCount = 56;
         public const int MusclesCount = 95;
 
-        public static void CreatePoseAsset(Animator animator, Transform model, string name, Texture2D thumbnail = null, string path = "")
+        private static string CreatePoseAssetPath(string path, string name)
         {
             if (string.IsNullOrEmpty(path))
                 path = PoseAssetDir;
+
             if (!(path.EndsWith("/") || path.EndsWith("\\")))
                 path = path + "/";
             path = path + name + ".asset";
 
-            path = AssetDatabase.GenerateUniqueAssetPath(path);
+            if (!AssetDatabase.IsValidFolder(PoseAssetDir))
+                AssetDatabase.CreateFolder(PoseFolderDir, PoseFolderName);
+
+            return AssetDatabase.GenerateUniqueAssetPath(path);
+        }
+
+        public static void CreatePoseAsset(Animator animator, Transform model, string name, Texture2D thumbnail = null, string path = "")
+        {
+            path = CreatePoseAssetPath(path, name);
 
             using (HumanPoseHandler humanPoseHandler = new HumanPoseHandler(animator.avatar, model))
             {
@@ -71,12 +82,7 @@ namespace VRCSDKExtension
 
         public static void CreatePoseAssetFronAnimationClip(AnimationClip clip, float time, string name, Texture2D thumbnail = null, string path = "")
         {
-            if (string.IsNullOrEmpty(path))
-                path = PoseAssetDir;
-            if (!(path.EndsWith("/") || path.EndsWith("\\")))
-                path = path + "/";
-            path = path + name + ".asset";
-            path = AssetDatabase.GenerateUniqueAssetPath(path);
+            path = CreatePoseAssetPath(path, name);
 
             if (clip == null)
             {
