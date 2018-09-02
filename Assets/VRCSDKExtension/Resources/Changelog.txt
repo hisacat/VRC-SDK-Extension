@@ -15,7 +15,7 @@ Changelog:
      -Set to T-Pose bug fixed.
 
     Todo
-     -Animation Override Controller Managed
+     -Animator Override Controller Managed
 	  for manage Avatar Animations
      -Fix 'Copy Avatar from New Model' mesh missing bug.
 
