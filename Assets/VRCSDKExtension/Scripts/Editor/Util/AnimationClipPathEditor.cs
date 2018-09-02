@@ -15,7 +15,7 @@ namespace VRCSDKExtension
         [MenuItem("Assets/AnimationClip Path Edit")]
         private static void OpenWithAnimationClipMenu()
         {
-            AnimationClipPathEditor.Init(Selection.activeObject as AnimationClip);
+            Init(Selection.activeObject as AnimationClip);
         }
 
         public static void Init(AnimationClip clip)
