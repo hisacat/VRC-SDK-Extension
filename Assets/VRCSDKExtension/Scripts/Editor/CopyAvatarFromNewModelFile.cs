@@ -161,7 +161,6 @@ namespace VRCSDKExtension
         {
             var avatarTrf = avatarObject.transform;
             var newAvatarTrf = (GameObject.Instantiate(selectedModelAsset) as GameObject).transform;
-            Undo.RegisterCreatedObjectUndo(newAvatarTrf.gameObject, "copy avatar from new model file");
 
             newAvatarTrf.name = selectedModelAsset.name;
 
@@ -367,8 +366,6 @@ namespace VRCSDKExtension
                                     continue;
                                 if (property.Name == "materials")
                                     continue;
-                                if (property.Name == "bones")
-                                    continue;
                             }
                             if (property.ReflectedType == typeof(ParticleSystemRenderer))
                             {
@@ -408,11 +405,10 @@ namespace VRCSDKExtension
                                     continue;
                             }
                             #endregion
-                            
-                            Debug.Log(component.GetType() + " " + property.Name);
+
                             var value = property.GetValue(component, null);
                             value = CheckReferencedValue(value, avatarTrfDic);
-                            
+
                             newProperty.SetValue(addedcomponent, value, null);
                         }
                         #endregion
@@ -430,6 +426,8 @@ namespace VRCSDKExtension
         {
             if (value != null)
             {
+                //Debug.Log(value is object[]);
+
                 var componentField = (value as Component);
                 if (componentField != null)
                 {
@@ -449,6 +447,40 @@ namespace VRCSDKExtension
                 {
                     if (avatarTrfDic.ContainsKey(transformField.transform))
                         value = avatarTrfDic[transformField.transform].transform;
+                    return value;
+                }
+
+                var componentArrayField = (value as Component[]);
+                if (componentArrayField != null)
+                {
+                    int count = componentArrayField.Length;
+                    for (int i = 0; i < count; i++)
+                    {
+                        if (avatarTrfDic.ContainsKey((value as Component[])[i].transform))
+                            (value as Component[])[i] = avatarTrfDic[(value as Component[])[i].transform].GetComponent((value as Component[])[i].GetType());
+                    }
+                    return value;
+                }
+                var gameobjectArrayField = (value as GameObject[]);
+                if (gameobjectArrayField != null)
+                {
+                    int count = gameobjectArrayField.Length;
+                    for (int i = 0; i < count; i++)
+                    {
+                        if (avatarTrfDic.ContainsKey((value as GameObject[])[i].transform))
+                            (value as GameObject[])[i] = avatarTrfDic[(value as GameObject[])[i].transform].gameObject;
+                    }
+                    return value;
+                }
+                var transformArrayField = (value as Transform[]);
+                if (transformArrayField != null)
+                {
+                    int count = transformArrayField.Length;
+                    for (int i = 0; i < count; i++)
+                    {
+                        if (avatarTrfDic.ContainsKey((value as Transform[])[i]))
+                            (value as Transform[])[i] = avatarTrfDic[(value as Transform[])[i]].transform;
+                    }
                     return value;
                 }
             }
