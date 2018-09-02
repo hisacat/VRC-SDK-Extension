@@ -5,6 +5,8 @@ using UnityEditor;
 using VRCSDK2;
 using VRC.Core;
 using System.Reflection;
+using System.Linq;
+using System;
 
 namespace VRCSDKExtension
 {
@@ -421,12 +423,41 @@ namespace VRCSDKExtension
             Localization.GetLocalizedString("global_done"),
             "Ok");
         }
-
+        public static List<T> CreateList<T>(params T[] elements)
+        {
+            return new List<T>(elements);
+        }
         private static object CheckReferencedValue(object value, Dictionary<Transform, Transform> avatarTrfDic)
         {
             if (value != null)
             {
-                //Debug.Log(value is object[]);
+                if (value is System.Collections.IList)
+                {
+                    var enumerableValues = value as System.Collections.IList;
+                    foreach (var enumerableValue in enumerableValues)
+                        CheckReferencedValue(enumerableValue, avatarTrfDic);
+                    
+                    if (value is object[])
+                        return (value as object[]).Clone();
+
+                    //Todo List COPY!!!!
+                    if (value is IList && value.GetType().IsGenericType && value.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>)))
+                    {
+                        Type elementType = enumerableValues.AsQueryable().ElementType;
+                        Type listGenericType = typeof(List<>);
+                        Type listType = listGenericType.MakeGenericType(elementType);
+                        ConstructorInfo ci = listType.GetConstructor(new Type[] { });
+                        var list = ci.Invoke(value, new object[] { });
+                        return list;
+                        //return (value as List<Rigidbody>).;
+                    }
+                    else
+                    {
+                        Debug.Log(enumerableValues.AsQueryable().ElementType);
+                        Debug.Log(value.GetType());
+                        Debug.Log("Unknown IList exists");
+                    }
+                }
 
                 var componentField = (value as Component);
                 if (componentField != null)
@@ -447,40 +478,6 @@ namespace VRCSDKExtension
                 {
                     if (avatarTrfDic.ContainsKey(transformField.transform))
                         value = avatarTrfDic[transformField.transform].transform;
-                    return value;
-                }
-
-                var componentArrayField = (value as Component[]);
-                if (componentArrayField != null)
-                {
-                    int count = componentArrayField.Length;
-                    for (int i = 0; i < count; i++)
-                    {
-                        if (avatarTrfDic.ContainsKey((value as Component[])[i].transform))
-                            (value as Component[])[i] = avatarTrfDic[(value as Component[])[i].transform].GetComponent((value as Component[])[i].GetType());
-                    }
-                    return value;
-                }
-                var gameobjectArrayField = (value as GameObject[]);
-                if (gameobjectArrayField != null)
-                {
-                    int count = gameobjectArrayField.Length;
-                    for (int i = 0; i < count; i++)
-                    {
-                        if (avatarTrfDic.ContainsKey((value as GameObject[])[i].transform))
-                            (value as GameObject[])[i] = avatarTrfDic[(value as GameObject[])[i].transform].gameObject;
-                    }
-                    return value;
-                }
-                var transformArrayField = (value as Transform[]);
-                if (transformArrayField != null)
-                {
-                    int count = transformArrayField.Length;
-                    for (int i = 0; i < count; i++)
-                    {
-                        if (avatarTrfDic.ContainsKey((value as Transform[])[i]))
-                            (value as Transform[])[i] = avatarTrfDic[(value as Transform[])[i]].transform;
-                    }
                     return value;
                 }
             }
