@@ -49,6 +49,9 @@ namespace VRCSDKExtension
                 return;
             }
 
+            //set lipsyncType to VisemeBlendShape
+            avatar.lipSync = VRC_AvatarDescriptor.LipSyncStyle.VisemeBlendShape;
+
             var blendShapeCount = avatar.VisemeSkinnedMesh.sharedMesh.blendShapeCount;
             string[] blendShapeNames = new string[blendShapeCount];
             for (int i = 0; i < blendShapeCount; i++)
