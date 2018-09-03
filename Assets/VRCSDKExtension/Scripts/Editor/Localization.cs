@@ -18,6 +18,9 @@ namespace VRCSDKExtension
         public static string GetLocalizedString(string id, params object[] arg)
         {
             if (localization == null)
+                Init();
+
+            if (localization == null)
                 return id;
 
             var table = localization.Find(x => (string)x["id"] == id);
