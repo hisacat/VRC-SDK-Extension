@@ -214,6 +214,7 @@ namespace VRCSDKExtension
 
                     GetAllBindlings();
                 }
+                GUILayout.Space(5);
             }
             GUILayout.EndVertical();
         }
