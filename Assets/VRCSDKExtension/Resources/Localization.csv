@@ -42,3 +42,4 @@ warnning_editor_is_playing,Editor is Playing,에디터가 실행중입니다.,�
 warnning_avatar_animator_missing,Avatar's Animator is Missing!,아바타에 Animator가 존재하지 않습니다.,アバターにAnimatorが存在しません
 warnning_avatar_model_missing,Avatar's Model is Missing!,아바타의 모델 파일을 찾을 수 없습니다.,アバターのモデルファイルが存在しません
 warnning_vrc_avatardescriptor_missing,VRC_AvatarDescriptor is Missing!,VRC_AvatarDescriptor를 찾을 수 없습니다.,VRC_AvatarDescriptorが存在しません
+util_vrcanimatoroverridecontroller_editor,VRCAnimatorController Editor,VRCAnimatorController 에디터,VRCAnimatorController Editor

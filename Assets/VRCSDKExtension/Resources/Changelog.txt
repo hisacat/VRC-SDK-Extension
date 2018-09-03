@@ -1,5 +1,12 @@
 Changelog:
 
+0.1b (dev) - 2018.09.03
+    Added
+     -Added 'VRC OverrideAnimatorController Editor'
+
+    Fix
+     -Fix Localization system loosing text when editor playing
+
 0.1b (dev) - 2018.09.02
     Added
      -Added 'AnimationClip Path Editor'
