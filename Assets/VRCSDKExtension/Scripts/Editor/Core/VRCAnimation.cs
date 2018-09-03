@@ -141,5 +141,10 @@ namespace VRCSDKExtension.Animation
 
             return true;
         }
+
+        public static RuntimeAnimatorController GetVRCRuntimeAnimatorController()
+        {
+            return AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(@"Assets\VRCSDK\Examples\Sample Assets\Animation\AvatarControllerTemplate.controller");
+        }
     }
 }

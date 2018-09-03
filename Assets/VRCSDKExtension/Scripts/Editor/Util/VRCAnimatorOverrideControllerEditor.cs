@@ -9,7 +9,7 @@ namespace VRCSDKExtension
 {
     public class VRCAnimatorOverrideControllerEditorWindow : EditorWindow
     {
-        [MenuItem("Assets/VRChat AnimatorOverrideController Edit", true)]
+        [MenuItem("Assets/VRC AnimatorOverrideController Edit", true)]
         public static bool OpenWithAnimatorOverrideControllerMenuValidation()
         {
             var controllers = VRCAnimation.GetControllerFromSelection();
@@ -20,11 +20,29 @@ namespace VRCSDKExtension
             }
             return (controllers.Count > 0 && controllers.Count == Selection.assetGUIDs.Length);
         }
-        [MenuItem("Assets/VRChat AnimatorOverrideController Edit")]
+        [MenuItem("Assets/VRC AnimatorOverrideController Edit")]
         private static void OpenWithAnimatorOverrideControllerMenu()
         {
             var controllers = VRCAnimation.GetControllerFromSelection();
             Init(controllers.ToArray());
+        }
+        [MenuItem("Assets/Create/VRC Animator Override Controller", false)]
+        private static void CreateVRCAnimatorOverrideController()
+        {
+            var runtimeAnimatorController = VRCAnimation.GetVRCRuntimeAnimatorController();
+            if(runtimeAnimatorController == null)
+            {
+                Debug.LogError("Cannot found AvatarControllerTemplate Asset!");
+                return;
+            }
+
+            var path = SelectionExtension.GetSelectedProjectPath();
+            var controller = new AnimatorOverrideController();
+            controller.runtimeAnimatorController = runtimeAnimatorController;
+
+            path += @"\VRC Animator Override Controller.overrideController";
+            path = AssetDatabase.GenerateUniqueAssetPath(path);
+            AssetDatabase.CreateAsset(controller, path);
         }
 
         private GUIStyle viveControllerMappingImage;
@@ -112,7 +130,7 @@ namespace VRCSDKExtension
 
         private void OnGUI()
         {
-            if(controllers == null || editedOverrides == null)
+            if (controllers == null || editedOverrides == null)
             {
                 this.Close();
                 return;
