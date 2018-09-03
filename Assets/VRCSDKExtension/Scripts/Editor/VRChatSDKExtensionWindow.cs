@@ -110,19 +110,19 @@ namespace VRCSDKExtension
 
             #region Set Language
             GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.gray;
+
+            GUI.backgroundColor = GlobalSettings.Settings.Language == Language.En ? Color.green : Color.gray;
             if (GUILayout.Button("English"))
-            {
                 GlobalSettings.Settings.SetLanguage(Language.En);
-            }
+            GUI.backgroundColor = GlobalSettings.Settings.Language == Language.Ko ? Color.green : Color.gray;
+
             if (GUILayout.Button("한국어"))
-            {
                 GlobalSettings.Settings.SetLanguage(Language.Ko);
-            }
+            GUI.backgroundColor = GlobalSettings.Settings.Language == Language.Ja ? Color.green : Color.gray;
+
             if (GUILayout.Button("日本語"))
-            {
                 GlobalSettings.Settings.SetLanguage(Language.Ja);
-            }
+
             GUI.backgroundColor = Color.white;
             GUILayout.EndHorizontal();
             GUILayout.Space(4);
