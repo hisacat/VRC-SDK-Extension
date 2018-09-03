@@ -50,12 +50,14 @@ namespace VRCSDKExtension
                 //Selection.activeObject = null;
 
                 //ToDo. fix "MecanimDataWasBuilt()"; << when animator window's open (right - bot preview window is playing)
+
+                //ToDo. fix Can't remove individual position animation curve m_LocalPosition.x you must remove the entire animation curve with m_LocalPosition.
                 clip.SetCurve(binding.path, binding.type, binding.propertyName, null);
 
                 SceneView.RepaintAll();
                 //Selection.activeObject = obj;
             }
-            public void SavePath()
+            public void ApplyPath()
             {
                 //var obj = Selection.activeObject;
                 //Selection.activeObject = null;
@@ -187,8 +189,8 @@ namespace VRCSDKExtension
                                 }
                                 if (GUILayout.Button("Reset"))
                                     binding.ResetEditPath();
-                                if (GUILayout.Button("Save"))
-                                    binding.SavePath();
+                                if (GUILayout.Button("Apply"))
+                                    binding.ApplyPath();
                             }
                             GUILayout.EndVertical();
                         }
@@ -206,11 +208,11 @@ namespace VRCSDKExtension
                     GetAllBindlings();
                 }
                 GUILayout.Space(10);
-                if (GUILayout.Button("Save All", GUILayout.Height(30)))
+                if (GUILayout.Button("Apply All", GUILayout.Height(30)))
                 {
                     int bindingCount = bindings.Count;
                     for (int i = 0; i < bindingCount; i++)
-                        bindings[i].SavePath();
+                        bindings[i].ApplyPath();
 
                     GetAllBindlings();
                 }

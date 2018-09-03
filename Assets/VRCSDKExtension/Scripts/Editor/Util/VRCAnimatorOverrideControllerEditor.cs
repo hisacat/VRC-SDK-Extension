@@ -220,7 +220,7 @@ namespace VRCSDKExtension
                     }
                 }
                 GUILayout.Space(10);
-                if (GUILayout.Button("Save", GUILayout.Height(30)))
+                if (GUILayout.Button("Apply", GUILayout.Height(30)))
                 {
                     for (int controllerIndex = 0; controllerIndex < controllersCount; controllerIndex++)
                     {
