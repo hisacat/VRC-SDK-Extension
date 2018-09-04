@@ -45,6 +45,7 @@ namespace VRCSDKExtension
 
         private void OnEnable()
         {
+            titleContent = new GUIContent(VRChatSDKExtension.ProjectName);
         }
 
         private string path = null;
