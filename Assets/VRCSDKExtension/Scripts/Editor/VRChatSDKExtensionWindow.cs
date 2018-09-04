@@ -220,6 +220,10 @@ namespace VRCSDKExtension
                         {
                             SetToTPose.DoSetTPose(avatarAnimator, AvatarTransform);
                         }
+                        if (GUILayout.Button(Localization.GetLocalizedString("avatar_pose_editor")))
+                        {
+                            PoseEditorWindow.Init(avatarAnimator, AvatarTransform);
+                        }
                         /*
                         if (GUILayout.Button("Create Test Pose From AnimationClip"))
                         {
