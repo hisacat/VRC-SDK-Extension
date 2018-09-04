@@ -12,7 +12,7 @@ namespace VRCSDKExtension
         public static void Init()
         {
             localization = null;
-            localization = CSVReader.Read("Localization");
+            localization = CSVReader.Read("Assets/VRCSDKExtension/Localization/Localization.csv");
         }
 
         public static string GetLocalizedString(string id, params object[] arg)

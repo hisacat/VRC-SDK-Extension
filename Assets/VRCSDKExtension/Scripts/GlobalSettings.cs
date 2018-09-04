@@ -16,7 +16,7 @@ namespace VRCSDKExtension
 
     public class GlobalSettings : ScriptableObject
     {
-        public const string SettingFilePath = "Assets/VRCSDKExtension/Resources/settings.asset";
+        public const string SettingFilePath = "Assets/VRCSDKExtension/Core/settings.asset";
 
         [SerializeField]
         private Language language;
@@ -33,7 +33,7 @@ namespace VRCSDKExtension
             get
             {
 #if UNITY_EDITOR
-                var settings = AssetDatabase.LoadAssetAtPath(SettingFilePath, typeof(GlobalSettings)) as GlobalSettings;
+                var settings = AssetDatabase.LoadAssetAtPath<GlobalSettings>(SettingFilePath);
                 if (settings == null)
                 {
                     settings = new GlobalSettings();

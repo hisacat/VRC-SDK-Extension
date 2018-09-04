@@ -44,7 +44,7 @@ namespace VRCSDKExtension
 
                 if (testEyeTracking == null)
                 {
-                    testEyeTracking = GameObject.Instantiate(Resources.Load("TestEyeTrackingPrefab")) as GameObject;
+                    testEyeTracking = GameObject.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/VRCSDKExtension/EditorPrefabs/TestEyeTrackingPrefab.prefab"));
                     testEyeTracking.name = "TestEyeTracking";
 
                     var headTrf = avatarAnimator.GetBoneTransform(HumanBodyBones.Head);

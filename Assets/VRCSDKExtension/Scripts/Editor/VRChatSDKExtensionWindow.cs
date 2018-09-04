@@ -57,8 +57,7 @@ namespace VRCSDKExtension
             avatarAnimatorAvatar = null;
             if (avatarAnimator != null)
                 avatarAnimatorAvatar = avatarAnimator.avatar;
-
-
+            
             avatarModel = null;
             if (avatarObject != null)
             {
@@ -92,14 +91,14 @@ namespace VRCSDKExtension
             {
                 normal =
                     {
-                        background = Resources.Load("vrcSdkExtensionHeader") as Texture2D,
+                        background = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/VRCSDKExtension/Media/VRCSDKExtension_Header.png"),
                         textColor = Color.white
                     },
                 fixedWidth = 400,
                 fixedHeight = 200
             };
 
-            changelog = (Resources.Load("changelog") as TextAsset).text;
+            changelog = (AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/VRCSDKExtension/Changelog.txt")).text;
         }
         void OnGUI()
         {
@@ -215,7 +214,7 @@ namespace VRCSDKExtension
                         {
                             SetToTPose.DoSetTPose(avatarAnimator, AvatarTransform);
                         }
-                        /*
+
                         if (GUILayout.Button("Create Test Pose From AnimationClip"))
                         {
                             SetToTPose.CreatePoseFromAnimationClip();
@@ -228,7 +227,7 @@ namespace VRCSDKExtension
                         {
                             SetToTPose.ApplyTestPose(avatarAnimator, AvatarTransform);
                         }
-                        */
+
                         //Copy Avatar from New Model file
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
                         {
@@ -290,6 +289,5 @@ namespace VRCSDKExtension
             GUILayout.Label(changelog);
             GUILayout.EndScrollView();
         }
-
     }
 }

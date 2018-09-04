@@ -114,7 +114,7 @@ namespace VRCSDKExtension
             {
                 normal =
                     {
-                        background = Resources.Load("handanimvivemapping") as Texture2D,
+                        background = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/VRCSDKExtension/Media/ViveHandAnimationMapping.png"),
                         textColor = Color.white
                     },
                 fixedWidth = 440,
