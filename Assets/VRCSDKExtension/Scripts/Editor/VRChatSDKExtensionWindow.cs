@@ -29,6 +29,9 @@ namespace VRCSDKExtension
         private static Vector2 changeLogScroll;
 
         private static GUIStyle vrcSdkExtensionHeader;
+        private static Texture2D twitterThumbnail;
+        private static Texture2D githubThumbnail;
+
         private static string changelog = null;
 
         private static void FindAvatar()
@@ -57,7 +60,7 @@ namespace VRCSDKExtension
             avatarAnimatorAvatar = null;
             if (avatarAnimator != null)
                 avatarAnimatorAvatar = avatarAnimator.avatar;
-            
+
             avatarModel = null;
             if (avatarObject != null)
             {
@@ -98,6 +101,9 @@ namespace VRCSDKExtension
                 fixedHeight = 200
             };
 
+            twitterThumbnail = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/VRCSDKExtension/Media/Thumbnail/twitter.png");
+            githubThumbnail = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/VRCSDKExtension/Media/Thumbnail/github.png");
+            
             changelog = (AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/VRCSDKExtension/Changelog.txt")).text;
         }
         void OnGUI()
@@ -184,7 +190,7 @@ namespace VRCSDKExtension
                     GUILayout.EndVertical();
                     #endregion
                     #endregion
-
+                    
                     if (avatarObject == null)
                         EditorGUILayout.HelpBox(Localization.GetLocalizedString("warnning_vrc_avatardescriptor_missing"), MessageType.Warning);
                     if (avatarObject != null && avatarAnimator == null)
@@ -274,9 +280,13 @@ namespace VRCSDKExtension
             GUILayout.EndVertical();
             #endregion
 
-            if (GUILayout.Button(Localization.GetLocalizedString("mainmenu_opengithub")))
+            if (GUILayout.Button(new GUIContent(Localization.GetLocalizedString("mainmenu_opengithub"), githubThumbnail)))
             {
                 Application.OpenURL("https://github.com/hisacat/VRC-SDK-Helper/");
+            }
+            if (GUILayout.Button(new GUIContent(Localization.GetLocalizedString("mainmenu_opentwitter"), twitterThumbnail)))
+            {
+                Application.OpenURL("https://twitter.com/ahisacat/");
             }
             if (GUILayout.Button(Localization.GetLocalizedString("mainmenu_checkforupdates")))
             {

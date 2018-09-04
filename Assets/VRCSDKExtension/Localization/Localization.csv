@@ -1,4 +1,5 @@
 id,En,Ko,Ja
+mainmenu_opentwitter,Developers Twitter,개발자 트위터,開発者Twitter
 avatar_helper_copy_avatar_from_new_model_file_error_no_model_file,Please select new model file,Please select new model file,Please select new model file
 avatar_helper_copy_avatar_from_new_model_file_warnning_same_gameobject_name_in_model_file,Some gameobject has same name in model file,Some gameobject has same name in model file,Some gameobject has same name in model file
 avatar_helper_copy_avatar_from_new_model_file_info_no_same_gameobject_name,There is no GameObject with the same name.<br>You can copy avatar from new model file,There is no GameObject with the same name.<br>You can copy avatar from new model file,There is no GameObject with the same name.<br>You can copy avatar from new model file
@@ -33,7 +34,7 @@ global_testing_function,For Testing Func,테스트 기능,テスト機能
 global_version,version,버전,バージョン
 language,english,한글,日本語
 mainmenu_avatar,Avatar,아바타 관련,アバター関連
-mainmenu_checkforupdates,Check for Updates,업데이트 확인,更新の確認
+mainmenu_checkforupdates,Check for Updates,업데이트 확인,アップデート確認
 mainmenu_opengithub,Open GitHub,GitHub 열기,GitHubオープン
 mainmenu_util,Util,부가기능,アドオン
 mainmenu_world,World,월드 관련,ワールド関連

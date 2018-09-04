@@ -1,5 +1,9 @@
 Changelog:
 
+0.1b (dev) - 2018.09.04
+    Changed
+     -Some Editor Resources Path changed
+
 0.1b (dev) - 2018.09.03
     Added
      -Added 'VRC OverrideAnimatorController Editor'
