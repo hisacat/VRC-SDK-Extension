@@ -214,7 +214,7 @@ namespace VRCSDKExtension
                         {
                             SetToTPose.DoSetTPose(avatarAnimator, AvatarTransform);
                         }
-
+                        /*
                         if (GUILayout.Button("Create Test Pose From AnimationClip"))
                         {
                             SetToTPose.CreatePoseFromAnimationClip();
@@ -227,7 +227,7 @@ namespace VRCSDKExtension
                         {
                             SetToTPose.ApplyTestPose(avatarAnimator, AvatarTransform);
                         }
-
+                        */
                         //Copy Avatar from New Model file
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
                         {
