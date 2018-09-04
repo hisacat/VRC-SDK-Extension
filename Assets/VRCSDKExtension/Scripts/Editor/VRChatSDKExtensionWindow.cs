@@ -235,6 +235,7 @@ namespace VRCSDKExtension
                         }
                         */
                         //Copy Avatar from New Model file
+                        GUILayout.Label("This Function on develop. Danger!");
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
                         {
                             CopyAvatarFromNewModelFileWindow.Init(avatarObject, avatarSkins, avatarModel);
