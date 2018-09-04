@@ -9,9 +9,9 @@ namespace VRCSDKExtension
 {
     public class PoseAsset : ScriptableObject
     {
-        private const string TPoseFilePath = "Assets/VRCSDKExtension/Resources/tpose.asset";
-        private const string PoseAssetDir = "Assets/VRCSDKExtension/Resources/Pose";
-        private const string PoseFolderDir = "Assets/VRCSDKExtension/Resources";
+        private const string TPoseFilePath = "Assets/VRCSDKExtension/Core/tpose.asset";
+        private const string PoseAssetDir = "Assets/VRCSDKExtension/Pose/";
+        private const string PoseFolderDir = "Assets/VRCSDKExtension/";
         private const string PoseFolderName = "Pose";
 
         [SerializeField]
@@ -33,24 +33,30 @@ namespace VRCSDKExtension
         public const int HumanBodyBoneCount = 56;
         public const int MusclesCount = 95;
 
-        private static string CreatePoseAssetPath(string path, string name)
+        private static string CreatePoseAssetPath(string name)
         {
-            if (string.IsNullOrEmpty(path))
-                path = PoseAssetDir;
+            string path = PoseAssetDir;
+
+            if (path.EndsWith("/") || path.EndsWith("\\"))
+            {
+                string CreateFolderPath = path.Remove(path.Length - 1, 1);
+                if (!AssetDatabase.IsValidFolder(CreateFolderPath))
+                    AssetDatabase.CreateFolder(CreateFolderPath, PoseFolderName);
+            }
 
             if (!(path.EndsWith("/") || path.EndsWith("\\")))
                 path = path + "/";
             path = path + name + ".asset";
 
-            if (!AssetDatabase.IsValidFolder(PoseAssetDir))
-                AssetDatabase.CreateFolder(PoseFolderDir, PoseFolderName);
-
-            return AssetDatabase.GenerateUniqueAssetPath(path);
+            Debug.Log(path);
+            path = AssetDatabase.GenerateUniqueAssetPath(path);
+            Debug.Log(path);
+            return path;
         }
 
-        public static void CreatePoseAsset(Animator animator, Transform model, string name, Texture2D thumbnail = null, string path = "")
+        public static void CreatePoseAsset(Animator animator, Transform model, string name, Texture2D thumbnail = null)
         {
-            path = CreatePoseAssetPath(path, name);
+            string path = CreatePoseAssetPath(name);
 
             using (HumanPoseHandler humanPoseHandler = new HumanPoseHandler(animator.avatar, model))
             {
@@ -82,7 +88,7 @@ namespace VRCSDKExtension
 
         public static void CreatePoseAssetFronAnimationClip(AnimationClip clip, float time, string name, Texture2D thumbnail = null, string path = "")
         {
-            path = CreatePoseAssetPath(path, name);
+            path = CreatePoseAssetPath(name);
 
             if (clip == null)
             {
@@ -143,6 +149,12 @@ namespace VRCSDKExtension
 
         public static void ApplyPose(Animator animator, Transform model, PoseAsset pose)
         {
+            if(pose == null)
+            {
+                Debug.LogError("PoseAsset dose not exisit");
+                return;
+            }
+
             using (HumanPoseHandler humanPoseHandler = new HumanPoseHandler(animator.avatar, model))
             {
                 if (!animator.isHuman)
