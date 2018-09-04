@@ -5,6 +5,8 @@ using UnityEditor;
 
 namespace VRCSDKExtension
 {
+    //this is on dev
+    //need check why ONSPAudioSource auto added when add audiosource in scene
     public class DanceAsset : ScriptableObject
     {
         [SerializeField]
@@ -17,8 +19,7 @@ namespace VRCSDKExtension
         private AnimationClip animation;
         [SerializeField]
         private AudioClip music;
-        [SerializeField]
-        private ONSPAudioSource onsp;
+        //Todo ONSPAudioSource managed?
 
         public static void CreateDanceAsset(string path, string name, AnimationClip animation, AudioClip music, ONSPAudioSource onsp)
         {
@@ -28,7 +29,7 @@ namespace VRCSDKExtension
 
     public class CreateDanceAssetWindow : EditorWindow
     {
-        [MenuItem("Assets/Create/VRC Dance")]
+        //[MenuItem("Assets/Create/VRC Dance")]
         private static void CreateVRCDanceAsset()
         {
             var path = SelectionExtension.GetSelectedProjectPath();
@@ -62,6 +63,7 @@ namespace VRCSDKExtension
 
                 GUILayout.BeginVertical(GUI.skin.box);
                 {
+                    #region Animation, Music, Name set fields
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Animation : ", GUILayout.Width(100));
                     animation = EditorGUILayout.ObjectField(animation, typeof(AnimationClip), false) as AnimationClip;
@@ -83,22 +85,27 @@ namespace VRCSDKExtension
                                 danceName = danceName.Replace(illegalCharacter, "");
                     }
                     GUILayout.EndHorizontal();
+                    #endregion
 
+                    GUI.enabled = !string.IsNullOrEmpty(danceName);
                     if (GUILayout.Button("Create"))
                     {
                         foreach (var illegalCharacter in illegalCharacters)
                             if (danceName != null)
                                 danceName = danceName.Replace(illegalCharacter, "");
 
-                        //create prefab ? or... 어떻게매니징하지.
-                        //프리팹은 꼭 만들지 않아도, 추가삭제를 해주면 돼.
-                        //씬에 두기엔, 캐릭터가 프리팹이어서 다른곳에도 존재하면???
-                        //오버라이드가 공유될시엔 어떡해. 씨발 옝외 존나많아.
+                        var prefabPath = path +"/" + danceName + ".prefab";
 
-                        //DanceAsset.CreateDanceAsset()
+                        GameObject danceSoundObj = new GameObject(danceName);
+                        var audioSource = danceSoundObj.AddComponent<AudioSource>();
+                        audioSource.clip = music;
 
+                        var Prefab = PrefabUtility.CreatePrefab(prefabPath,danceSoundObj,ReplacePrefabOptions.ConnectToPrefab);
+                        GameObject.DestroyImmediate(danceSoundObj);
+                        
                         this.Close();
                     }
+                    GUI.enabled = true;
                 }
                 GUILayout.EndVertical();
             }
