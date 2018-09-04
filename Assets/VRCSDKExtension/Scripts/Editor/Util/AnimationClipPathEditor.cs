@@ -40,36 +40,99 @@ namespace VRCSDKExtension
             public string shownPropertyName;
             public string shownObjectName;
 
+            private bool isTransformBinding = false;
+
             public void ResetEditPath()
             {
                 editPath = binding.path;
             }
             public void RemoveProperty()
             {
-                //var obj = Selection.activeObject;
-                //Selection.activeObject = null;
-
                 //ToDo. fix "MecanimDataWasBuilt()"; << when animator window's open (right - bot preview window is playing)
-
-                //ToDo. fix Can't remove individual position animation curve m_LocalPosition.x you must remove the entire animation curve with m_LocalPosition.
-                clip.SetCurve(binding.path, binding.type, binding.propertyName, null);
-
+                if (isTransformBinding)
+                {
+                    if (binding.propertyName == "m_LocalPosition.x")
+                        clip.SetCurve(binding.path, binding.type, "m_LocalPosition", null);
+                    if (binding.propertyName == "localEulerAnglesRaw.x")
+                        clip.SetCurve(binding.path, binding.type, "m_LocalEuler", null);
+                    if (binding.propertyName == "m_LocalScale.x")
+                        clip.SetCurve(binding.path, binding.type, "m_LocalScale", null);
+                }
+                else
+                {
+                    clip.SetCurve(binding.path, binding.type, binding.propertyName, null);
+                }
                 SceneView.RepaintAll();
-                //Selection.activeObject = obj;
             }
             public void ApplyPath()
             {
-                //var obj = Selection.activeObject;
-                //Selection.activeObject = null;
+                if (isTransformBinding)
+                {
+                    if (binding.propertyName != "m_LocalPosition.x" &&
+                        binding.propertyName != "localEulerAnglesRaw.x" &&
+                        binding.propertyName != "m_LocalScale.x")
+                    {
+                        return;
+                    }
+                    AnimationClipCurveData xBinding = binding;
+                    AnimationClipCurveData yBinding = null;
+                    AnimationClipCurveData zBinding = null;
+                    
+                    var allbindlings = AnimationUtility.GetAllCurves(clip, true);
+                    int bindCount = allbindlings.Length;
+                    foreach (var bind in allbindlings)
+                    {
+                        if (bind == binding)
+                            continue;
+                        if (bind.type != typeof(Transform))
+                            continue;
+                        if (bind.path != binding.path)
+                            continue;
 
-                RemoveProperty();
-                binding.path = editPath;
-                
-                //ToDo. fix "MecanimDataWasBuilt()"; << when animator window's open (right - bot preview window is playing)
-                clip.SetCurve(binding.path, binding.type, binding.propertyName, binding.curve);
+                        switch(binding.propertyName)
+                        {
+                            case "m_LocalPosition.x":
+                                if (bind.propertyName == "m_LocalPosition.y")
+                                    yBinding = bind;
+                                if (bind.propertyName == "m_LocalPosition.z")
+                                    zBinding = bind;
+                                break;
+                            case "localEulerAnglesRaw.x":
+                                if (bind.propertyName == "localEulerAnglesRaw.y")
+                                    yBinding = bind;
+                                if (bind.propertyName == "localEulerAnglesRaw.z")
+                                    zBinding = bind;
+                                break;
+                            case "m_LocalScale.x":
+                                if (bind.propertyName == "m_LocalScale.y")
+                                    yBinding = bind;
+                                if (bind.propertyName == "m_LocalScale.z")
+                                    zBinding = bind;
+                                break;
+                        }
+                    }
 
+                    if (xBinding == null || yBinding == null || zBinding == null)
+                        return;
+
+                    RemoveProperty();
+                    xBinding.path = editPath;
+                    yBinding.path = editPath;
+                    zBinding.path = editPath;
+
+                    clip.SetCurve(xBinding.path, xBinding.type, xBinding.propertyName, xBinding.curve);
+                    clip.SetCurve(yBinding.path, yBinding.type, yBinding.propertyName, yBinding.curve);
+                    clip.SetCurve(zBinding.path, zBinding.type, zBinding.propertyName, zBinding.curve);
+                }
+                else
+                {
+                    RemoveProperty();
+                    binding.path = editPath;
+
+                    //ToDo. fix "MecanimDataWasBuilt()"; << when animator window's open (right - bot preview window is playing)
+                    clip.SetCurve(binding.path, binding.type, binding.propertyName, binding.curve);
+                }
                 SceneView.RepaintAll();
-                //Selection.activeObject = obj;
             }
 
             public PathExistsBinding(AnimationClip clip, AnimationClipCurveData binding)
@@ -92,6 +155,17 @@ namespace VRCSDKExtension
 
                 this.shownPropertyName = pName;
                 splitTemp = binding.path.Split('/');
+
+                if (binding.type == typeof(Transform))
+                {
+                    this.isTransformBinding = true;
+                    if (binding.propertyName == "m_LocalPosition.x")
+                        this.shownPropertyName = "Position";
+                    if (binding.propertyName == "localEulerAnglesRaw.x")
+                        this.shownPropertyName = "Rotation";
+                    if (binding.propertyName == "m_LocalScale.x")
+                        this.shownPropertyName = "Scale";
+                }
 
                 this.shownObjectName = splitTemp[splitTemp.Length - 1];
             }
@@ -133,6 +207,19 @@ namespace VRCSDKExtension
             {
                 if (string.IsNullOrEmpty(bind.path))
                     continue;
+
+                if (bind.type == typeof(Transform))
+                {
+                    if (bind.propertyName == "m_LocalPosition.y" ||
+                        bind.propertyName == "m_LocalPosition.z")
+                        continue;
+                    if (bind.propertyName == "localEulerAnglesRaw.y" ||
+                        bind.propertyName == "localEulerAnglesRaw.z")
+                        continue;
+                    if (bind.propertyName == "m_LocalScale.y" ||
+                        bind.propertyName == "m_LocalScale.z")
+                        continue;
+                }
                 bindings.Add(new PathExistsBinding(clip, bind));
             }
         }
@@ -190,7 +277,11 @@ namespace VRCSDKExtension
                                 if (GUILayout.Button("Reset"))
                                     binding.ResetEditPath();
                                 if (GUILayout.Button("Apply"))
+                                {
                                     binding.ApplyPath();
+                                    GetAllBindlings();
+                                    break;
+                                }
                             }
                             GUILayout.EndVertical();
                         }
