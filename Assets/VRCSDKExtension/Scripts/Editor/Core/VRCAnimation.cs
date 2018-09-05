@@ -135,7 +135,7 @@ namespace VRCSDKExtension.Animation
 
             for (int i = 0; i < VRCAnimationCount; i++)
             {
-                if (overrides[i].Key.name != ((VRCAnimationAll)i).ToString())
+                if (!(overrides.Exists(x => x.Key.name == ((VRCAnimationAll)i).ToString())))
                     return false;
             }
 

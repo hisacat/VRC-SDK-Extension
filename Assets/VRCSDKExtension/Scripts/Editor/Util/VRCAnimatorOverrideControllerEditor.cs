@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using VRCSDKExtension.Animation;
+using System.Linq;
 
 namespace VRCSDKExtension
 {
@@ -258,8 +259,7 @@ namespace VRCSDKExtension
         private void GUIHandTab()
         {
             GUIDrawDefaultAnimationClipUI<VRCAnimationHand>();
-
-            Debug.Log(position.height);
+            
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -292,9 +292,8 @@ namespace VRCSDKExtension
                 for (int i = 0; i < count; i++)
                 {
                     var animationType = (Enum)(Enum.Parse(typeof(T), names[i]));
-                    var animationIndex = (int)(object)animationType;
-                    var animationKey = overrideKeys[animationIndex];
-                    var animationName = animationKey.name;
+                    var animationName = names[i];
+                    var animationIndex = overrideKeys.ToList().FindIndex(x => x.name == animationName);
 
                     GUILayout.BeginHorizontal();
                     {
