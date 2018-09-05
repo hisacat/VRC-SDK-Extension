@@ -26,6 +26,7 @@ namespace VRCSDKExtension.Animation
         IDLE = 16,
         PRONEFWD = 17,
         PRONEIDLE = 18,
+        ROCKNROLL = 19,
         RUNBACK = 20,
         RUNFWD = 21,
         RUNSTRAFELT45 = 22,
