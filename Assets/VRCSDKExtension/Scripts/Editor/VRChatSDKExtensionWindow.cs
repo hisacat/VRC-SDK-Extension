@@ -103,7 +103,7 @@ namespace VRCSDKExtension
 
             twitterThumbnail = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/VRCSDKExtension/Media/Thumbnail/twitter.png");
             githubThumbnail = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/VRCSDKExtension/Media/Thumbnail/github.png");
-            
+
             changelog = (AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/VRCSDKExtension/Changelog.txt")).text;
         }
         void OnGUI()
@@ -190,7 +190,7 @@ namespace VRCSDKExtension
                     GUILayout.EndVertical();
                     #endregion
                     #endregion
-                    
+
                     if (avatarObject == null)
                         EditorGUILayout.HelpBox(Localization.GetLocalizedString("warnning_vrc_avatardescriptor_missing"), MessageType.Warning);
                     if (avatarObject != null && avatarAnimator == null)
@@ -242,7 +242,7 @@ namespace VRCSDKExtension
                         GUILayout.Label("This Function on develop. Danger!");
                         if (GUILayout.Button(Localization.GetLocalizedString("avatar_helper_copy_avatar_from_new_model_file")))
                         {
-                            CopyAvatarFromNewModelFileWindow.Init(avatarObject, avatarSkins, avatarModel);
+                            CopyAvatarFromNewModelFileWindow_Lagacy.Init(avatarObject, avatarSkins, avatarModel);
                         }
                         #endregion
 
@@ -279,7 +279,12 @@ namespace VRCSDKExtension
                 foldout_Util = EditorGUILayout.Foldout(foldout_Util, Localization.GetLocalizedString("mainmenu_util"), true);
                 if (foldout_Util)
                 {
-                    GUILayout.Label(Localization.GetLocalizedString("global_nottingyet"));
+                    if (GUILayout.Button(Localization.GetLocalizedString("util_copy_avatar_from_new_model_file")))
+                    {
+                        CopyAvatarFromNewModelFileWindow.Init(null);
+                    }
+
+                    //GUILayout.Label(Localization.GetLocalizedString("global_nottingyet"));
                 }
             }
             GUILayout.EndVertical();
